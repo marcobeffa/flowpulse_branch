@@ -24,7 +24,7 @@ module BranchesHelper
     return "" if tree.nil? || tree.empty?
 
     # Creiamo un link con l'ID corretto del nodo
-    node_link = "<a href='/branches/#{tree[:id]}'>#{tree[:icon]} #{tree[:name]}</a>"
+    node_link = "#{tree[:icon]} #{tree[:name]}"
     tree_content = "#{prefix}#{node_link}\n"
 
     tree[:children].each_with_index do |child, index|

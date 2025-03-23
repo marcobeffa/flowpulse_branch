@@ -1,15 +1,17 @@
-<div class="prose"> 
-
- 
+<div class="prose">
   <ol>
     <% parent_chain(@branch).each do |id_branch| %>
       <% branch = Current.user.branches.find(id_branch) %>
       <li>
-       
-      <%= link_to branch.slug, branch %>
+        <% if action_name == "mappa" %>
+          <%= link_to branch.slug, mappa_branch_path(branch) %>
+        <% elsif action_name == "ordinamble" %>
+          <%= link_to branch.slug, ordinamble_branch_path(branch) %>
+        <% elsif action_name == "ul" %>
+          <%= link_to branch.slug, ul_branch_path(branch) %>
+        <% end %>
       </li>
     <% end %>
-      <li><%= @branch.slug %></li>
-
+    <li><%= @branch.slug %></li>
   </ol>
 </div>
