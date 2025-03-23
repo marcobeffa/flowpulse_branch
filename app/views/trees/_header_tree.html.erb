@@ -1,0 +1,18 @@
+ 
+<div class="prose">
+  <h5 class="m-4">
+    <% if authenticated? %>
+      <% if Current.user == @branch_root.user %>
+        <%= link_to 'Dashboard', mappa_branch_path(@branch) %> | 
+      <% end %>
+    <% end %>
+    <%= link_to "@#{@profile.username}", profile_tree_path(@profile.username)  %>
+    | 
+    <% if controller_name = "branches" %>
+      <%= link_to @branch_root.slug, branch_path(@branch) %>
+    <% else %>
+      <%= link_to @branch_root.slug, profile_tree_path(@branch_root.user.username, @branch_root) %>
+    <% end %>
+    | <%= @branch.slug if @branch != @branch_root %>
+  </h5>
+</div>

@@ -1,0 +1,6 @@
+<%= render @category %>
+<div class="flex flex-wrap items-center gap mbs-6" style="--row-gap: .5rem">
+  <%= link_to "Edit this category", edit_category_path(@category), class: "btn" %>
+  <%= link_to "Back to categories", categories_path, class: "btn" %>
+  <%= button_to "Destroy this category", @category, method: :delete, class: "btn" %>
+</div>

@@ -1,0 +1,35 @@
+<div>
+  <h1 class="font-bold text-4xl">Businesses</h1>
+  <p>I tuoi business</p>
+</div>
+<!--div id="branches" class="flex flex-col" style="gap: 2rem;">
+  <% @branches.each do |branch| %>
+    <div class="flex flex-col items-start gap">
+      <%#= render branch %>
+      <%= link_to "Show this branch", branch, class: "btn" %>
+    </div>
+  <% end %>
+</div-->
+<table class="w-full border-collapse border border-gray-300">
+  <thead>
+    <tr class="bg-gray-100">
+      <th class="border border-gray-300 p-2 text-left">User email</th>
+      <th class="border border-gray-300 p-2 text-left">Branch id</th>
+      <th class="border border-gray-300 p-2 text-left">Nome</th>
+      <th class="border border-gray-300 p-2 text-left">Azioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @branches.each do |branch| %>
+      <tr class="hover:bg-gray-50">
+        <td class="border border-gray-300 p-2"><%= branch.user.email_address %></td>
+        <td class="border border-gray-300 p-2"><%= branch.id %></td>
+        <td class="border border-gray-300 p-2"><%= link_to branch.slug, business_path(branch), class: "text-blue-600 underline" %></td>
+        <td class="border border-gray-300 p-2">
+          <%= link_to "Modifica", edit_branch_path(branch), class: "text-yellow-600" %> |
+          <%= link_to "Elimina", branch, method: :delete, data: { confirm: "Sei sicuro?" }, class: "text-red-600" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

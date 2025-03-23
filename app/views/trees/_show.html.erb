@@ -1,0 +1,51 @@
+<div class="flex rounded-lg h-full">
+  <div class="block justify-center p-3 border-ie resizable-inline">
+    <% if authenticated? %>
+      <% if Current.user == @branch_root.user %>
+        <% if controller_name == "trees" %>
+          <%= link_to branch_path(@branch_root) do %>
+            <div class="badge badge--positive">Pubblico</div>
+            Privato
+          <% end %>
+          <br>
+          <hr>
+          <br>
+        <% else %>
+          <%= link_to profile_tree_path(@branch_root.user.username, @branch_root) do %>
+            Pubblica  
+            <div class="badge badge--negative">Privata</div>
+          <% end%>
+          <br>
+          <hr>
+          <br>
+        <% end %>
+      <% end %>
+    <% end %>
+    <div class="prose">
+      <h4><%= link_to @branch_root.slug, branch_path(@branch_root) %></h4>
+    </div>
+    <%= render 'trees/ul_list_tree', branches: @branch_root.children, branch: @branch,  parent_id: nil %>
+  </div>
+  <div class="flex grow p-3">
+    <div class="">
+      <%= render 'trees/header_tree' %>
+      <% if controller_name == "trees" %>
+        <%= render 'trees/public_tree' %>
+      <% else %>
+        <%= render 'trees/private_tree' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<style>
+  .prose pre {
+  font-family: monospace;
+  white-space: pre;
+  overflow-x: auto;
+  }
+
+  .prose pre a {
+  text-decoration: none; /* Rimuove la sottolineatura */
+  color: inherit; /* Mantiene il colore del testo normale */
+  }
+</style>

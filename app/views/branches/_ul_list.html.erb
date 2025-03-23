@@ -1,0 +1,25 @@
+<ul>
+  <% branches.each do |branch| %>
+    <li>
+      <%= link_to branch.slug, ul_branch_path(branch) %>
+      <% if branch.children.any? { |b| b.parent_id == branch.id } %>
+        <%= render "branches/ul_list", branches: branch.children, parent_id: branch.id %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+<style>
+  ul {
+  list-style-type: none; /* Rimuove i pallini */
+  counter-reset: section;
+  }
+
+  ul li {
+  counter-increment: section;
+  }
+
+  ul li::before {
+  content: counters(section, ".") ". "; /* Genera la numerazione 1., 1.1, 1.1.1 */
+  font-weight: bold;
+  }
+</style>

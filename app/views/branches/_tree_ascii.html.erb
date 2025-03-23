@@ -1,0 +1,15 @@
+<div class="prose">
+  <pre><%= raw(hash_to_ascii(tree_to_hash(@branch))) %></pre>
+</div>
+<style>
+  .prose pre {
+  font-family: monospace;
+  white-space: pre;
+  overflow-x: auto;
+  }
+
+  .prose pre a {
+  text-decoration: none; /* Rimuove la sottolineatura */
+  color: inherit; /* Mantiene il colore del testo normale */
+  }
+</style>

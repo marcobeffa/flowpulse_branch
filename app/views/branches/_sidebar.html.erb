@@ -1,0 +1,15 @@
+<div class="prose"> 
+
+ 
+  <ol>
+    <% parent_chain(@branch).each do |id_branch| %>
+      <% branch = Current.user.branches.find(id_branch) %>
+      <li>
+       
+      <%= link_to branch.slug, branch %>
+      </li>
+    <% end %>
+      <li><%= @branch.slug %></li>
+
+  </ol>
+</div>

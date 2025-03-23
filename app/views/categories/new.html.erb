@@ -1,0 +1,9 @@
+<% content_for :title, "New category" %>
+
+<h1 class="font-bold text-4xl mbe-4">New category</h1>
+
+<%= render "form", category: @category %>
+
+<div class="inline-flex flex-wrap items-center gap mbs-2" style="--row-gap: .5rem">
+  <%= link_to "Back to categories", categories_path, class: "btn" %>
+</div>

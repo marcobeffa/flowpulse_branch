@@ -1,0 +1,66 @@
+<%# Buttons Simple %>
+<%= render 'branches/pubblication' %>
+<nav class="tabs__list" aria-label="Home and Settings">
+  <%= link_to "Private", branch_path(@branch), class: "btn tabs__button" %>
+  <%= link_to "Mappa", mappa_branch_path(@branch), class: "btn tabs__button" %>
+  <%= link_to "Ordinabile", ordinabile_branch_path(@branch), class: "btn tabs__button", aria: { current: "page" } %>
+  <%= link_to "Lista", ul_branch_path(@branch), class: "btn tabs__button" %>
+  <% if @branch.published == true && @branch.visibility == "pubblico" %>
+    <%= link_to "Pubblico", profile_tree_path(Current.user.username, @branch), class: "btn tabs__button" %>
+  <% end %>
+</nav>
+<div class="flex rounded-lg border">
+  <div class="flex items-center justify-center p-3 border-ie resizable-inline">
+    <%= render 'sidebar' %>
+  </div>
+  <div class="flex  grow p-3">
+    <div class="">
+      <%= render "branches/sortable_simple", branches: @branch.children, branch: @branch %>
+    </div>
+  </div>
+</div>
+<%#= render 'tree_ascii' %>
+<%#= render "ul_list", branches: @branch.children, parent_id: nil %>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+<script>
+  function makeSortable(element) {
+    new Sortable(element, {
+      group: 'nested',
+      animation: 150,
+      fallbackOnBody: true,
+      swapThreshold: 0.65,
+      onAdd: function (evt) {
+        // Apply sortable to new nested lists
+        let nestedUl = evt.item.querySelector('ul');
+        if (nestedUl) makeSortable(nestedUl);
+      },
+      onEnd: function (evt) {
+        let item = evt.item;
+        let itemId = item.dataset.id;
+        let parentUl = item.closest('ul');
+        let parentLi = parentUl.closest('li');
+        let parentId = parentLi ? parentLi.dataset.id : null;
+
+        // Calcola la nuova posizione (index all’interno della lista)
+        let newPosition = Array.from(parentUl.children).indexOf(item);
+
+        // Esegui redirect alla nuova posizione
+        if (itemId && parentId != null && newPosition != null) {
+          const correctedPosition = parseInt(newPosition) + 1;
+
+          const url = `/branches/${itemId}/updateposition?parent_id=${parentId}&position=${correctedPosition}`;
+
+          window.location.href = url;
+        }
+      }
+
+    });
+
+    // Rendere anche le sotto-liste sortable
+    Array.from(element.querySelectorAll('ul')).forEach(ul => makeSortable(ul));
+  }
+
+  // Inizializza il sortable principale
+  makeSortable(document.getElementById('nested-list'));
+</script>

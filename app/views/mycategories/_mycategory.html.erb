@@ -1,0 +1,15 @@
+<div id="<%= dom_id mycategory %>" class="flex flex-col gap">
+  <div class="flex gap-half">
+    <p class="leading-none"><%= mycategory.user.email_address %></p>
+    <h4 class="font-medium leading-none">Public:</h4>
+    <p class="leading-none"><%= mycategory.public %></p>
+    <p class="leading-none">Category_id: <%= mycategory.category_id %></p>
+  </div>
+  <%= link_to mycategory do %>
+    <div class="flex">
+      <div class="badge badge--positive"><%= mycategory.icon %>&nbsp;<%= mycategory.name.titleize %>
+      </div>
+      <p class="">&nbsp;&nbsp;<%= mycategory.description %></p>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,118 @@
+<div class="sidebar-menu">
+  <%= link_to "#", class: "btn sidebar-menu__button" do %>
+    <div class="flex shrink-0 overflow-hidden rounded-lg bg-black">
+      <%= image_tag "sidebar-logo.svg", class: "colorize-white m-2", size: 16, alt: "ZI" %>
+    </div>
+    <div class="flex flex-col text-start leading-tight overflow-hidden">
+      <span class="overflow-ellipsis font-semibold">Flowpulse Note</span>
+      <span class="overflow-ellipsis text-xs">Fai pulsare il tuo flusso</span>
+    </div>
+    <%= image_tag "chevrons-up-down.svg", class: "mis-auto", size: 16, aria: { hidden: true } %>
+  <% end %>
+  <div class="sidebar-menu__content">
+    <!--div class="sidebar-menu__group">
+    <div class="sidebar-menu__group-label">Platform</div>
+    <div class="sidebar-menu__items">
+      <details open>
+        <summary class="btn sidebar-menu__button">
+          <%= image_tag "square-terminal.svg", size: 16, aria: { hidden: true } %>
+          <span class="overflow-ellipsis">Playground</span>
+        </summary>
+        <nav class="sidebar-menu__sub">
+          <%= link_to "History", "#", class: "btn sidebar-menu__button", aria: { current: "page" } %>
+          <%= link_to "Starred", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Settings", "#", class: "btn sidebar-menu__button" %>
+        </nav>
+      </details>
+      <details>
+        <summary class="btn sidebar-menu__button">
+          <%= image_tag "bot.svg", size: 16, aria: { hidden: true } %>
+          <span class="overflow-ellipsis">Models</span>
+        </summary>
+        <nav class="sidebar-menu__sub">
+          <%= link_to "Genesis", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Explorer", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Quantum", "#", class: "btn sidebar-menu__button" %>
+        </nav>
+      </details>
+      <details>
+        <summary class="btn sidebar-menu__button">
+          <%= image_tag "book-open.svg", size: 16, aria: { hidden: true } %>
+          <span class="overflow-ellipsis">Documentation</span>
+          <%- image_tag "chevron-right.svg", class: "mis-auto", size: 16, aria: { hidden: true } -%>
+        </summary>
+        <nav class="sidebar-menu__sub">
+          <%= link_to "Documentation", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Get Started", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Tutorials", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Changelog", "#", class: "btn sidebar-menu__button" %>
+        </nav>
+      </details>
+      <details>
+        <summary class="btn sidebar-menu__button">
+          <%= image_tag "settings-2.svg", size: 16, aria: { hidden: true } %>
+          <span class="overflow-ellipsis">Settings</span>
+        </summary>
+        <nav class="sidebar-menu__sub">
+          <%= link_to "General", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Teams", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Billing", "#", class: "btn sidebar-menu__button" %>
+          <%= link_to "Limits", "#", class: "btn sidebar-menu__button" %>
+        </nav>
+      </details>
+    </div>
+  </div-->
+    <div class="sidebar-menu__group">
+      <div class="sidebar-menu__group-label">Contenuti</div>
+      <nav class="sidebar-menu__items">
+        <% if authenticated? %>
+          <ul>
+            <li>
+              <% if authenticated? %>
+            <%= link_to "Branches", branches_path %>
+            <%= link_to "Category", categories_path %>
+   
+            <%= link_to "My category", mycategories_path %>
+              <%= link_to branches_path(:all), remote: true, class: "btn sidebar-menu__button" do %>
+                <%= image_tag "frame.svg", size: 16, aria: { hidden: true } %>
+                <span class="overflow-ellipsis">Branches</span>
+              <% end %>
+              
+            
+              <% end %>
+            </li>
+          </ul>
+        <% end %>
+        <!--<%= link_to "#", class: "btn sidebar-menu__button" do %>
+          <%= image_tag "chart-pie.svg", size: 16, aria: { hidden: true } %>
+          <span class="overflow-ellipsis">Sales & Marketing</span>
+        <% end %>
+        <%= link_to "#", class: "btn sidebar-menu__button" do %>
+          <%= image_tag "map.svg", size: 16, aria: { hidden: true } %>
+          <span class="overflow-ellipsis">Travel</span>
+        <% end %>
+        <%= tag.a class: "btn sidebar-menu__button", aria: { disabled: true } do %>
+          <%= image_tag "ellipsis.svg", size: 16, aria: { hidden: true } %>
+          <span class="overflow-ellipsis">More</span>
+        <% end %>-->
+      </nav>
+    </div>
+  </div>
+  <% if authenticated? %>
+    <%#= Current.session %>
+    <%#= link_to edit_registration_path, class: "btn sidebar-menu__button mbs-auto" do %>
+      <div class="flex shrink-0 overflow-hidden rounded-lg">
+        <%= image_tag "cartoon.jpg", class: "colorize-none", size: 32, alt: "CN" %>
+      </div>
+      <div class="flex flex-col text-start leading-tight overflow-hidden">
+        <span class="overflow-ellipsis max-i-full font-semibold"><%#= Current.user.username %></span>
+        <span class="overflow-ellipsis max-i-full text-xs"><%= Current.user.email_address %></span>
+      </div>
+      <%= image_tag "chevrons-up-down.svg", class: "mis-auto", size: 16, aria: { hidden: true } %>
+    <%# end %>
+  <% else %>
+    <%= link_to 'Home', root_path %>
+    <%= link_to 'Accedi', new_session_path %>
+    <%#= link_to 'Registrati', new_registration_path %>
+  <% end %>
+</div>

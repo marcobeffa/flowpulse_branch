@@ -1,0 +1,16 @@
+<% content_for :title, "Mycategories" %>
+<nav class="tabs__list" aria-label="Home and Settings">
+  <%= link_to "Standard Categories", categories_path(@branch), class: "btn tabs__button" %>
+  <%= link_to "My categories", mycategories_path(@branch), class: "btn tabs__button", aria: { current: "page" } %>
+</nav>
+<div class="flex items-center justify-between mbe-4">
+  <h1 class="font-bold text-4xl">Mycategories</h1>
+  <%= link_to "New mycategory", new_mycategory_path, class: "btn btn--primary" %>
+</div>
+<div id="mycategories" class="flex flex-col" style="gap: 2rem;">
+  <% @mycategories.each do |mycategory| %>
+    <div class="flex flex-col items-start gap">
+      <%= render mycategory %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,50 @@
+<ul>
+  <li class="list-group-item" data-id="<%= @branch.id %>" data-parent-id="<%= @branch.parent_id %>">
+    <span class="drag-handle">☰</span> <%= @branch.slug %>
+    <ul id="nested-list" class="nested-sortable" data-sortable-target="list">
+      <%= render partial: "sortable_child_simple", collection: @branch.children.order(:position), as: :branch %>
+    </ul>
+  </li>
+</ul>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+<script>
+  function makeSortable(element) {
+    new Sortable(element, {
+      group: 'nested',
+      animation: 150,
+      fallbackOnBody: true,
+      swapThreshold: 0.65,
+      onAdd: function (evt) {
+        // Apply sortable to new nested lists
+        let nestedUl = evt.item.querySelector('ul');
+        if (nestedUl) makeSortable(nestedUl);
+      },
+      onEnd: function (evt) {
+        let item = evt.item;
+        let itemId = item.dataset.id;
+        let parentUl = item.closest('ul');
+        let parentLi = parentUl.closest('li');
+        let parentId = parentLi ? parentLi.dataset.id : null;
+
+        // Calcola la nuova posizione (index all’interno della lista)
+        let newPosition = Array.from(parentUl.children).indexOf(item);
+
+        // Esegui redirect alla nuova posizione
+        if (itemId && parentId != null && newPosition != null) {
+          const correctedPosition = parseInt(newPosition) + 1;
+
+          const url = `/branches/${itemId}/updateposition?parent_id=${parentId}&position=${correctedPosition}`;
+
+          window.location.href = url;
+        }
+      }
+
+    });
+
+    // Rendere anche le sotto-liste sortable
+    Array.from(element.querySelectorAll('ul')).forEach(ul => makeSortable(ul));
+  }
+
+  // Inizializza il sortable principale
+  makeSortable(document.getElementById('nested-list'));
+</script>

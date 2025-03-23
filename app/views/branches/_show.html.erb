@@ -1,0 +1,44 @@
+<%# Buttons Simple %>
+<% if action_name == "show" %>
+  <%= render 'trees/show' %>
+<% else %>
+  <%= render 'branches/pubblication' %>
+  <nav class="tabs__list" aria-label="Vista contenuto">
+    <%= link_to "Private", branch_path(@branch),
+      class: "btn tabs__button #{'active' if action_name == 'show'}",
+      aria: { current: ("page" if action_name == 'show') } %>
+    <%= link_to "Mappa", branch_path(@branch),
+      class: "btn tabs__button #{'active' if action_name == 'mappa'}",
+      aria: { current: ("page" if action_name == 'mappa') } %>
+    <%= link_to "Ordinabile", ordinabile_branch_path(@branch),
+      class: "btn tabs__button #{'active' if action_name == 'ordinabile'}",
+      aria: { current: ("page" if action_name == 'ordinabile') } %>
+    <%= link_to "Lista", ul_branch_path(@branch),
+      class: "btn tabs__button #{'active' if action_name == 'ul'}",
+      aria: { current: ("page" if action_name == 'ul') } %>
+    <% if @branch.published == true && @branch.visibility == "pubblico" %>
+      <%= link_to "Pubblico", profile_tree_path(Current.user.username, @branch),
+      class: "btn tabs__button #{'active' if action_name == 'ul'}",
+      aria: { current: ("page" if action_name == 'pubblico') } %>
+    <% end %>
+  </nav>
+  <div class="flex rounded-lg border">
+    <div class="flex items-center justify-center p-3 border-ie resizable-inline">
+      <%= render 'sidebar' %>
+    </div>
+    <div class="flex  grow p-3">
+      <div class="">
+        <% if action_name == "mappa" %>
+          <%= render 'tree_ascii' %>
+        <% elsif action_name == "ordinable" %>
+          <%= render "branches/sortable_simple", branches: @branch.children, branch: @branch %>
+        <% elsif action_name == "ul" %>
+          <%= render "ul_list", branches: @branch.children, parent_id: nil %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <%#= render 'tree_ascii' %>
+  <%#= render "ul_list", branches: @branch.children, parent_id: nil %>
+</div>
+<% end %>

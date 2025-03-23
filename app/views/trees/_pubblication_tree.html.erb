@@ -1,0 +1,39 @@
+<!--- stato -->
+<div class="flex gap-2 m-2 items-center">
+  <!-- PUBLISHED -->
+  <%= turbo_frame_tag "branch_published_#{branch.id}" do %>
+    <%= form_with url: branch_path(branch), method: :patch,
+      scope: :branch,
+      data: { turbo_frame: "branch_published_#{branch.id}" } do |f| %>
+      <%= hidden_field_tag "branch[published]", !branch.published? %>
+      <%= f.submit (branch.published? ? "✅" : "❌"),
+        class: "m-2 #{ branch.published? ? 'btn-success' : 'btn-secondary' }" %>
+    <% end %>
+  <% end %>
+  <!-- VISIBILITY -->
+  <%= turbo_frame_tag "branch_visibility_#{branch.id}" do %>
+    <%= form_with model: branch, url: branch_path(branch), method: :patch,
+    data: { turbo_frame: "branch_visibility_#{branch.id}" } do |f| %>
+      <div class="flex items-center gap-2 m-2">
+        <span>
+          <%=
+          case branch.visibility
+          when "privato"
+            "🔒"
+          when "pubblico"
+            "🌐"
+          when "iscritti"
+            "👥"
+          else
+            "❓"
+          end
+        %>
+        </span>
+        <%= f.label :visibility, nil, class: "sr-only" %>
+        <%= f.select :visibility,
+          Branch.visibilities.keys.map { |v| [t("activerecord.attributes.branch.visibility.#{v}"), v] },
+          {}, { onchange: "this.form.requestSubmit()", class: "select" } %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,40 @@
+<% content_for :title, "Categories" %>
+<nav class="tabs__list" aria-label="Home and Settings">
+  <%= link_to "Standard Categories", categories_path(@branch), class: "btn tabs__button", aria: { current: "page" } %>
+  <%= link_to "My categories", mycategories_path(@branch), class: "btn tabs__button" %>
+</nav>
+<div class="flex items-center justify-between mbe-4">
+  <h1 class="font-bold text-4xl">Categories</h1>
+  <%= link_to "New category", new_category_path, class: "btn btn--primary" %>
+</div>
+<div id="categories" class="flex flex-col" style="gap: 2rem;">
+  <table class="table">
+    <caption>
+      A list of your recent invoices.
+    </caption>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>My category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categories.each do |category| %>
+        <tr>
+          <th><%= link_to category, class:"m-2" do %>
+              <div class="flex">
+                <div class="badge badge--positive"><%= category.icon %>&nbsp;<%= category.name %>
+                </div>
+              </div>
+            <% end %></th>
+          <td>
+            <% if category.copied_to_mycategory? %>
+              <span class="text-success">✔️ Già copiato</span>
+            <% else %>
+              <%= button_to "Copia in MyCategory", copy_to_mycategory_category_path(category), method: :post, class: "btn btn-primary" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
