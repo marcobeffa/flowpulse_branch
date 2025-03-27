@@ -1,5 +1,5 @@
 <div class="prose">
-  <pre><%= raw(hash_to_ascii(tree_to_hash(@branch))) %>
+  <pre><%= sanitize(raw(hash_to_ascii(tree_to_hash(@branch)))) %>
   </pre>
 </div>
 <style>
