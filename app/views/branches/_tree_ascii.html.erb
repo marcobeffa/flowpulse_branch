@@ -1,9 +1,5 @@
 <div class="prose">
-  <pre>
-    <%= link_to @branch do %>
-      <%= h(hash_to_ascii(tree_to_hash(@branch))) %>
-  
-  <% end %>
+  <pre><%= raw(hash_to_ascii(tree_to_hash(@branch))) %>
   </pre>
 </div>
 <style>

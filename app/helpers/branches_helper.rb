@@ -14,29 +14,29 @@ module BranchesHelper
     return {} if branch.nil?
 
     {
-      id: branch.id,  # <-- Aggiunto ID per il link corretto
-      name: branch.slug,
-      icon: branch.mycategory&.icon || "\u2796",
+      id: branch.id,
+      name: branch.slug.strip,  # Rimuove spazi prima/dopo
+      icon: (branch.mycategory&.icon || "\u2796").strip,
       children: branch.children.map { |child| tree_to_hash(child) }
     }
   end
-  def hash_to_ascii(tree, prefix = "", parent_prefix = "")
+  def hash_to_ascii(tree, prefix = "", parent_prefix = "", is_root = true)
     return "" if tree.nil? || tree.empty?
 
-    # Creiamo un link con l'ID corretto del nodo
-    node_link = "#{tree[:icon]} #{tree[:name]}"
-    tree_content = "#{prefix}#{node_link}\n"
+    node_link = "#{tree[:icon]} <a href='/branches/#{tree[:id]}'>#{tree[:name]}</a>"
+    tree_content = is_root ? "#{node_link}\n" : "#{prefix}#{node_link}\n"
 
     tree[:children].each_with_index do |child, index|
       is_last = index == tree[:children].length - 1
       child_prefix = parent_prefix + (is_last ? "└── " : "├── ")
       new_parent_prefix = parent_prefix + (is_last ? "    " : "│   ")
 
-      tree_content += hash_to_ascii(child, child_prefix, new_parent_prefix)
+      tree_content += hash_to_ascii(child, child_prefix, new_parent_prefix, false)
     end
 
     tree_content
   end
+
 
   def markdown(text)
     renderer = Redcarpet::Render::HTML.new(hard_wrap: true, filter_html: true)
