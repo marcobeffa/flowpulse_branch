@@ -8,7 +8,7 @@
   <div class="children">
     <% @branch.children.each do |child| %>
       <div class="child-node">
-        └── <%= link_to child.name, edit_branch_path(child) %>
+        ├──  <%= link_to child.name, edit_branch_path(child) %>
       </div>
     <% end %>
   </div>

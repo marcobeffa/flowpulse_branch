@@ -1,6 +1,6 @@
 class BusinessesController < ApplicationController
   def index
-    @branches = Current.user.branches.joins(:mycategory).where(mycategories: { name: "business" })
+    @branches = Current.user.branches
   end
 
   def show

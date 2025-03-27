@@ -11,13 +11,13 @@
 #  slug_note          :string
 #  user_note_username :string
 #  child_id           :integer
-#  mycategory_id      :integer          not null
+#  mycategory_id      :integer          not null Eliminata
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #
 # Indexes
 #
-#  index_branches_on_mycategory_id  (mycategory_id)
+#  index_branches_on_mycategory_id  (mycategory_id) Eliminata
 #  index_branches_on_user_id        (user_id)
 #
 
@@ -40,6 +40,7 @@ class Branch < ApplicationRecord
 
   # Validazioni
   validates :slug, presence: true, uniqueness: true
+  validates :icon, presence: true, uniqueness: true
   #  validates :slug_note, uniqueness: true, allow_nil: true
   #
   ## Enum per visibilità
@@ -57,12 +58,14 @@ class Branch < ApplicationRecord
   end
 
   def self_and_ancestors_ids
-    ids = [ id ]
+    ids = []
     current = self
-    while current.parent_id.present?
-      ids.unshift(current.parent_id)
+
+    while current
+      ids.unshift(current.id)
       current = current.parent
     end
+
     ids
   end
 end

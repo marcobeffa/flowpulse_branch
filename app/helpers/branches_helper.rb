@@ -16,7 +16,7 @@ module BranchesHelper
     {
       id: branch.id,
       name: branch.slug.strip,  # Rimuove spazi prima/dopo
-      icon: (branch.mycategory&.icon || "\u2796").strip,
+      icon: (branch.icon || "\u2796").strip,
       children: branch.children.map { |child| tree_to_hash(child) }
     }
   end

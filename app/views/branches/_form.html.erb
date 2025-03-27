@@ -18,6 +18,10 @@
     <%= form.text_field :slug, class: "input" %>
   </div>
   <div class="flex flex-col items-start gap-half mbe-4">
+    <%= form.label :icon, class: "text-sm font-medium leading-none" %>
+    <%= form.text_field :icon, class: "input" %>
+  </div>
+  <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :parent_id, class: "text-sm font-medium leading-none" %>
     <% if  params[:parent_id].present? %>
       <%= form.number_field :parent_id, class: "input", value: params[:parent_id] %>
@@ -40,10 +44,6 @@
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :user_note_username, class: "text-sm font-medium leading-none" %>
     <%= form.text_field :user_note_username, class: "input" %>
-  </div>
-  <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :mycategory_id, "Categoria", class: "text-sm font-medium leading-none" %>
-    <%= form.collection_select :mycategory_id, Mycategory.all, :id, :name, { include_blank: "Seleziona una categoria" },  class: " p-2 border rounded bg-white text-black appearance-none cursor-pointer", required: true %>
   </div>
   <!-- Published -->
   <div class="flex flex-col items-start gap-half mbe-4">

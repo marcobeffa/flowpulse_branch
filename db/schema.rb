@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_23_143122) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_27_185551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -23,35 +23,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_23_143122) do
     t.string "slug_note"
     t.string "user_note_username"
     t.integer "child_id"
-    t.bigint "mycategory_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "visibility"
     t.boolean "published", default: false
     t.integer "stato"
-    t.index ["mycategory_id"], name: "index_branches_on_mycategory_id"
+    t.string "icon"
     t.index ["user_id"], name: "index_branches_on_user_id"
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.string "icon"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "mycategories", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "category_id"
-    t.string "name"
-    t.string "icon"
-    t.text "description"
-    t.boolean "public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_mycategories_on_category_id"
-    t.index ["user_id"], name: "index_mycategories_on_user_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -73,9 +51,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_23_143122) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
-  add_foreign_key "branches", "mycategories"
   add_foreign_key "branches", "users"
-  add_foreign_key "mycategories", "categories"
-  add_foreign_key "mycategories", "users"
   add_foreign_key "sessions", "users"
 end

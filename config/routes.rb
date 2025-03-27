@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   end
   resources :businesses, only: %i[ show index ]
   resources :projects, only: %i[ show index ]
-  resources :mycategories
-  resources :categories
   get "pages/home"
   resource :session
   resources :passwords, param: :token
@@ -35,5 +33,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "branches#index"
+  root "pages#home"
 end
