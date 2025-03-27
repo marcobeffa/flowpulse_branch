@@ -50,6 +50,19 @@ class BranchesController < ApplicationController
 
   # GET /branches/1/edit
   def edit
+    if params[:parent_id_for_link]
+      @parent = Branch.find(params[:parent_id_for_link])
+    end
+
+    @linkcat = Current.user.mycategories.where(name: "link").first
+    if @linkcat.nil?
+      @linkcat = Mycategories.create(name: "link",  icon: "🔗", description: "link")
+    end
+    @branches = Current.user.branches.where.not(id: @branch.id)
+    if @branch.parent_id != nil
+       @branches = @branches.where.not(id: @branch.parent_id)
+    end
+    @branch_link_parent = @branch.user.branches.where(child_id: @branch.id)
   end
 
   # POST /branches or /branches.json
@@ -58,8 +71,14 @@ class BranchesController < ApplicationController
 
     respond_to do |format|
       if @branch.save
-        format.html { redirect_to @branch, notice: "Branch was successfully created." }
-        format.json { render :show, status: :created, location: @branch }
+        if @branch.parent_id
+          format.html { redirect_to edit_branch_path(@branch.parent_id), notice: "Branch was successfully created." }
+          format.json { render :show, status: :created, location: edit_branch_path(@branch.parent_id) }
+        else
+          format.html { redirect_to @branch, notice: "Branch was successfully created." }
+          format.json { render :show, status: :created, location: @branch }
+        end
+
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @branch.errors, status: :unprocessable_entity }

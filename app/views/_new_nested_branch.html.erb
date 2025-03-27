@@ -1,0 +1,17 @@
+<h1>Modifica ramo: <%= @branch.slug %></h1>
+<!-- Genitore (livello 0) -->
+<div class="tree-node">
+  <strong><%= @branch.slug %></strong>
+</div>
+<!-- Turbo Frame per figli -->
+<turbo-frame id="branch_children_<%= @branch.id %>">
+  <div class="children">
+    <% @branch.children.each do |child| %>
+      <div class="child-node">
+        └── <%= link_to child.slug, edit_branch_path(child) %>
+      </div>
+    <% end %>
+  </div>
+</turbo-frame>
+<!-- Form per aggiungere figlio -->
+<%= render "branches/form", branch: Branch.new(parent_id: @branch.id), parent: @branch %>

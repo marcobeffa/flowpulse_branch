@@ -19,7 +19,7 @@
   </div>
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :parent_id, class: "text-sm font-medium leading-none" %>
-    <% if  %>
+    <% if  params[:parent_id].present? %>
       <%= form.number_field :parent_id, class: "input", value: params[:parent_id] %>
     <% else %>
       <%= form.number_field :parent_id, class: "input" %>

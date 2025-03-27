@@ -23,7 +23,7 @@ module BranchesHelper
   def hash_to_ascii(tree, prefix = "", parent_prefix = "", is_root = true)
     return "" if tree.nil? || tree.empty?
 
-    node_link = "#{tree[:icon]} <a href='/branches/#{tree[:id]}'>#{tree[:name]}</a>"
+    node_link = "#{tree[:icon]} <a href='/branches/#{tree[:id]}/mappa'>#{tree[:name]}</a>"
     tree_content = is_root ? "#{node_link}\n" : "#{prefix}#{node_link}\n"
 
     tree[:children].each_with_index do |child, index|

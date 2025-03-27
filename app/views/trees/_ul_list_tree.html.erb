@@ -1,7 +1,7 @@
 <ul>
-  <% branches.each do |branch| %>
+  <% branches.order(:position).each do |branch| %>
     <% if (branch.visibility == "pubblico" && branch.published == true && controller_name == "trees") || controller_name == "branches"  %>
-      <li>
+      <li  class="<%= "border" if controller_name == "branches" %>">
       <% end %>
       <% if controller_name == "branches" %>
         <%= link_to branch.slug, branch_path(branch) %>

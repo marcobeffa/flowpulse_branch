@@ -1,0 +1,6 @@
+<%= form_with(model: branch, data: { turbo_frame: "branch_children_#{parent.id}" }, class:"flex") do |f| %>
+  <%= f.hidden_field :parent_id, value: parent.id %>
+  <%= f.collection_select :mycategory_id, Mycategory.all, :id, :name, { include_blank: "Seleziona una categoria" },  class: " p-2 border rounded bg-white text-black appearance-none cursor-pointer", required: true %>
+  <%= f.text_field :slug, placeholder: "Nuovo figlio..." %>
+  <%= f.submit "Aggiungi", class:"btn" %>
+<% end %>

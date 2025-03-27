@@ -6,6 +6,10 @@
     </div>
   <% end %>
 </div-->
+<% if action_name == "edit" %>
+  <h3 class="font-bold text-2xl mbe-4"> Aggiungi Genitore a <%= Branch.find(params[:edit_child_id_for_link]).slug %>
+  </h3>
+<% end %>
 <table class="w-full border-collapse border border-gray-300">
   <thead>
     <tr class="bg-gray-100">
@@ -20,10 +24,18 @@
       <tr class="hover:bg-gray-50">
         <td class="border border-gray-300 p-2"><%= branch.user.email_address %></td>
         <td class="border border-gray-300 p-2"><%= branch.id %></td>
-        <td class="border border-gray-300 p-2"><%= link_to branch.slug, mappa_branch_path(branch), class: "text-blue-600 underline" %></td>
         <td class="border border-gray-300 p-2">
-          <%= link_to "Modifica", edit_branch_path(branch), class: "text-yellow-600" %> |
-          <%= link_to "Elimina", branch, method: :delete, data: { confirm: "Sei sicuro?" }, class: "text-red-600" %>
+          <%= branch.slug %>
+        </td>
+        <td class="border border-gray-300 p-2">
+          <% if action_name == "edit" %>
+            <%= link_to "+ genitore", edit_branch_path(params[:edit_child_id_for_link], parent_id_for_link: branch.id ), class:"btn" %>
+          <% else %>
+            <div class="flex">
+              <%= link_to "mostra", mappa_branch_path(branch), class: "btn" %>
+              <%= link_to "Modifica", edit_branch_path(branch), class: "btn" %>
+            </div>
+          <% end %>
         </td>
       </tr>
     <% end %>

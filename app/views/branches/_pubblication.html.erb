@@ -3,7 +3,7 @@
   <h1 class="text-xl font-bold">
     <%= @branch.slug %><%= link_to "+ 🔽", new_branch_path(parent_id: @branch.id), class: "btn m-4" %></h1>
   <%= link_to "Edit", edit_branch_path(@branch), class: "btn" %>
-  <%= button_to "Destroy", @branch, method: :delete, class: "btn",  data: { confirm: "Sei sicuro?" } %>
+  <%= button_to "Elimina", @branch, method: :delete, class: "btn", data: { turbo_confirm: "Are you sure?" } %>
 </div>
 <!--- stato -->
 <div class="flex gap-2 m-2 items-center">

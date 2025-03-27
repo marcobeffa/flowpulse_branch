@@ -1,0 +1,12 @@
+<% if Current.user.branches.find_by(child_id: @branch.id).nil? %>
+  <b>Nuovo Genitore id: <%=  @parent.id %>-<%=  @parent.slug %></b>
+  <%= form_with(model: branch, data: { turbo_frame: "branch_children_#{parent.id}" }) do |f| %>
+    <%= f.hidden_field :child_id, value: @branch.id %>
+    <%= f.hidden_field :mycategory_id, value: @linkcat.id %>
+    <%= f.hidden_field :slug, value: "id-#{params[:parent_id_for_link]}-#{@parent.slug} -> id-#{@branch.id}-#{@branch.slug}" %>
+    <%= f.hidden_field :parent_id, value: params[:parent_id_for_link] %>
+    <%= f.submit "Aggiungi", class:"btn" %>
+  <% end %>
+<% else %>
+  <%= link_to '+ link parent id', edit_branch_path(@branch, edit_child_id_for_link: @branch.id), class:"btn" %>
+<% end %>

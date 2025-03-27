@@ -7,7 +7,7 @@
     <%= link_to "Private", branch_path(@branch),
       class: "btn tabs__button #{'active' if action_name == 'show'}",
       aria: { current: ("page" if action_name == 'show') } %>
-    <%= link_to "Mappa", branch_path(@branch),
+    <%= link_to "Mappa", mappa_branch_path(@branch),
       class: "btn tabs__button #{'active' if action_name == 'mappa'}",
       aria: { current: ("page" if action_name == 'mappa') } %>
     <%= link_to "Ordinabile", ordinabile_branch_path(@branch),

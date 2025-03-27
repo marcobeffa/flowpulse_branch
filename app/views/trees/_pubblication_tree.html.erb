@@ -1,5 +1,5 @@
 <!--- stato -->
-<div class="flex gap-2 m-2 items-center">
+<div class="flex gap-2 mi-1 ">
   <!-- PUBLISHED -->
   <%= turbo_frame_tag "branch_published_#{branch.id}" do %>
     <%= form_with url: branch_path(branch), method: :patch,

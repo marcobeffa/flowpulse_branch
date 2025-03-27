@@ -1,10 +1,60 @@
 <% content_for :title, "Editing branch" %>
-
-<h1 class="font-bold text-4xl mbe-4">Editing branch</h1>
-
-<%= render "form", branch: @branch %>
-
-<div class="inline-flex flex-wrap items-center gap mbs-2" style="--row-gap: .5rem">
-  <%= link_to "Show this branch", @branch, class: "btn" %>
-  <%= link_to "Back to branches", branches_path, class: "btn" %>
-</div>
+<% if params[:edit_child_id_for_link].nil? %>
+  <div class="flex">
+    <div class="w-1/2 p-2">
+      <h1 class="font-bold text-4xl mbe-4">Modifica branch <%= @branch.slug %></h1>
+      <%= render "form", branch: @branch %>
+      <div class="inline-flex flex-wrap items-center gap mbs-2" style="--row-gap: .5rem">
+        <%= link_to "Show this branch", @branch, class: "btn" %>
+        <%= link_to "Back to branches", branches_path, class: "btn" %>
+        <%= button_to "Elimina", @branch, method: :delete, class: "btn", data: { turbo_confirm: "Are you sure?" } %>
+      </div>
+    </div>
+    <div class="w-1/2 p-2">
+      <% if params[:parent_id_for_link] %>
+        <%= render "branches/form_link_parent_new", branch: Branch.new(parent_id: @branch.id), parent: @branch, class:"btn" %>
+      <% else%>
+        <%= link_to '+ link parent id', edit_branch_path(@branch, edit_child_id_for_link: @branch.id), class:"btn" %>
+      <% end %>
+      <!-- Genitore (livello 0) -->
+      <turbo-frame id="branch_children_<%= @branch.id %>">
+        <div class="children flex">
+          <% @branch_link_parent.each do |child| %>
+            <div class="child-node">
+              <% genitore = Branch.find(child.parent_id) %>
+              <%= link_to "genitore: #{genitore.slug}", edit_branch_path(Branch.find(child.parent_id)) %>
+              - 
+              <%= link_to "link: #{child.slug}" , edit_branch_path(child) %>
+            </div>
+          <% end %>
+        </div>
+      </turbo-frame>
+      <hr>
+      <div class="tree-node">
+        <h1 class="font-bold text-2xl m-2">
+          <strong><%= @branch.slug %></strong>
+        </h1>
+      </div>
+      <hr>
+      <!-- Turbo Frame per figli -->
+      <turbo-frame id="branch_children_<%= @branch.id %>">
+        <div class="children">
+          <% @branch.children.each do |child| %>
+            <div class="child-node">
+              └── <%= link_to child.slug, edit_branch_path(child) %>
+            </div>
+          <% end %>
+        </div>
+      </turbo-frame>
+      <!-- Form per aggiungere figlio -->
+      <% if params[:new_children].present? %>
+        <%= render "branches/form_children_new", branch: Branch.new(parent_id: @branch.id), parent: @branch %>
+        <%= link_to 'Annulla', edit_branch_path(@branch), class:"btn" %>
+      <% else %>
+        <%= link_to '+ figlio', edit_branch_path(@branch, new_children: true), class:"btn" %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <%= render "index" %>
+<% end %>
