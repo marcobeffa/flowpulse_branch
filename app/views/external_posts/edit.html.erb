@@ -1,7 +1,7 @@
 <% content_for :title, "Editing external post" %>
 <h1 class="font-bold text-4xl mbe-4">Editing external post</h1>
-<% if @branch.external_post&.content.present? %>
-  <%= link_to @branch.external_post.content["title"], "https://note.flowpulse.net/api/v1/#{@branch.external_post.api_variabile}", target: "_blank", rel: "noopener", class:"btn" %>
+<% if @external_post&.content.present? %>
+  <%= link_to @external_post.content["title"], "https://note.flowpulse.net/api/v1/#{@external_post.api_variabile}", target: "_blank", rel: "noopener", class:"btn" %>
 <% end %>
 <%= render "form", external_post: @external_post %>
 <div class="inline-flex flex-wrap items-center gap mbs-2" style="--row-gap: .5rem">
