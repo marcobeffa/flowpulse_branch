@@ -54,10 +54,7 @@ class BranchesController < ApplicationController
       @parent = Branch.find(params[:parent_id_for_link])
     end
 
-    @linkcat = Current.user.mycategories.where(name: "link").first
-    if @linkcat.nil?
-      @linkcat = Mycategories.create(name: "link",  icon: "🔗", description: "link")
-    end
+
     @branches = Current.user.branches.where.not(id: @branch.id)
     if @branch.parent_id != nil
        @branches = @branches.where.not(id: @branch.parent_id)

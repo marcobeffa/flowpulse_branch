@@ -39,8 +39,8 @@ class Branch < ApplicationRecord
   acts_as_list scope: :parent_id
 
   # Validazioni
-  validates :slug, presence: true, uniqueness: true
-  validates :icon, presence: true, uniqueness: true
+  validates :slug, presence: true
+  validates :icon, presence: true
   #  validates :slug_note, uniqueness: true, allow_nil: true
   #
   ## Enum per visibilità

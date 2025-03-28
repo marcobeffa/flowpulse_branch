@@ -21,6 +21,21 @@
       class: "btn tabs__button #{'active' if action_name == 'ul'}",
       aria: { current: ("page" if action_name == 'pubblico') } %>
     <% end %>
+    <% if @branch.published == true && @branch.visibility == "pubblico" %>
+      <%= link_to "Albero", profile_tree_path(Current.user.username, @branch),
+      class: "btn tabs__button #{'active' if action_name == 'ul'}",
+      aria: { current: ("page" if action_name == 'pubblico') } %>
+    <% end %>
+    <% if @branch.published == true && @branch.visibility == "pubblico" %>
+      <%= link_to "Treemap", profile_tree_path(Current.user.username, @branch),
+      class: "btn tabs__button #{'active' if action_name == 'ul'}",
+      aria: { current: ("page" if action_name == 'pubblico') } %>
+    <% end %>
+    <% if @branch.published == true && @branch.visibility == "pubblico" %>
+      <%= link_to "Book", profile_tree_path(Current.user.username, @branch),
+      class: "btn tabs__button #{'active' if action_name == 'ul'}",
+      aria: { current: ("page" if action_name == 'pubblico') } %>
+    <% end %>
   </nav>
   <div class="flex rounded-lg border">
     <div class="flex items-center justify-center p-3 border-ie resizable-inline">
