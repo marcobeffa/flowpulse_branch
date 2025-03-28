@@ -1,9 +1,9 @@
 <% if Current.user.branches.where(child_id: @branch.id).where(parent_id: params[:parent_id_for_link]).first.nil? %>
-  <b>Genitore: <%= Current.user.branches.find(params[:parent_id_for_link]).slug %></b>
+  <%= link_to 'Annulla', edit_branch_path(@branch), class:"btn" %><b>Genitore: <%= Current.user.branches.find(params[:parent_id_for_link]).slug %></b>
   <%= form_with(model: branch, data: { turbo_frame: "branch_parent_#{@branch.child_id}" }, class:"flex") do |f| %>
     <%= f.hidden_field :child_id, value: @branch.id %>
-    <%= f.collection_select :mycategory_id, Mycategory.all, :id, :name, { include_blank: "Seleziona una categoria" },  class: " p-2 border rounded bg-white text-black appearance-none cursor-pointer", required: true %>
-    <%= f.text_field :slug, class:"input" %>
+    <%= f.text_field :icon,  placeholder:"icona", class:"input" %>
+    <%= f.text_field :slug,  placeholder:"nuovo padre",class:"input" %>
     <%= f.hidden_field :parent_id, value: params[:parent_id_for_link] %>
     <%= f.submit "Aggiungi", class:"btn" %>
   <% end %>

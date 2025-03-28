@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :external_posts, except: [ :index, :show ]
   resources :categories do
     post "copy_to_mycategory", on: :member, to: "mycategories#create_from_category"
   end

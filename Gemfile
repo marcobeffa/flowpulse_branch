@@ -70,3 +70,5 @@ gem "css-zero", "~> 1.1"
 gem "requestjs-rails"
 gem "annotate"
 gem "redcarpet"
+
+gem "httparty"

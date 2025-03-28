@@ -24,6 +24,7 @@
 class Branch < ApplicationRecord
   belongs_to :user
   belongs_to :mycategory, optional: true
+  has_one :external_post, dependent: :destroy
 
   has_many :category, through: :mycategory
 
@@ -35,12 +36,14 @@ class Branch < ApplicationRecord
   belongs_to :link_child, class_name: "Branch", foreign_key: "child_id", optional: true
   has_one :linked_parent, class_name: "Branch", foreign_key: "child_id", dependent: :nullify
 
+
   # Gestisce l'ordine tra i figli dello stesso parent
   acts_as_list scope: :parent_id
 
+
   # Validazioni
   validates :slug, presence: true
-  validates :icon, presence: true
+  # validates :icon, presence: true
   #  validates :slug_note, uniqueness: true, allow_nil: true
   #
   ## Enum per visibilità
@@ -55,6 +58,14 @@ class Branch < ApplicationRecord
   scope :published, -> { where(published: true) }
   def root
     self.class.where(id: self_and_ancestors_ids.first).first
+  end
+
+  def safe_parent
+    Branch.find_by(id: parent_id)
+  end
+
+  def safe_link_child
+    Branch.find_by(id: child_id)
   end
 
   def self_and_ancestors_ids

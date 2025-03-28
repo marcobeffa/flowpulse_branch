@@ -41,28 +41,40 @@
           <h1 class="font-bold text-xl">
             <strong><%= @branch.slug %></strong>
           </h1>
+          <% if Current.user.branches.where(parent_id: @branch.id).count == 0 %>
+            <% if @branch.child_id.nil? %>
+              <span class="m-1">  -> </span>
+              <%= link_to '+ figlio link', edit_branch_path(@branch, edit_child_id_for_link: @branch.id), class:"btn" %>
+            <% else %>
+              <span class="m-1">  -> </span>
+              <%= link_to  Current.user.branches.find(@branch.child_id).slug, edit_branch_path(Current.user.branches.find(@branch.child_id))  %>
+            <% end %>
+          <% end %>
         </div>
       </div>
       <hr>
-      <!-- Turbo Frame per figli -->
-      <!--turbo-frame id="branch_children_<%= @branch.id %>"-->
-      <div class="children">
-        <% @branch.children.each do |child| %>
-          <div class="child-node">
-            <pre>   ├── <%= link_to child.slug, edit_branch_path(child) %></pre>
-          </div>
+      <% if @branch.child_id.nil? %>
+        <!-- Turbo Frame per figli -->
+        <!--turbo-frame id="branch_children_<%= @branch.id %>"-->
+        <div class="children">
+          <% @branch.children.each do |child| %>
+            <div class="child-node">
+              <pre>   ├── <%= link_to child.slug, edit_branch_path(child) %></pre>
+            </div>
+          <% end %>
+          <!--/div-->
+        </turbo-frame>
+        <!-- Form per aggiungere figlio -->
+        <% if params[:new_children].present? %>
+          <%= render "branches/form_children_new", branch: Branch.new(parent_id: @branch.id), parent: @branch %>
+          <%= link_to 'Annulla', edit_branch_path(@branch), class:"btn" %>
+        <% else %>
+          <%= link_to '+ figli', edit_branch_path(@branch, new_children: true), class:"btn" %>
         <% end %>
-        <!--/div-->
-      </turbo-frame>
-      <!-- Form per aggiungere figlio -->
-      <% if params[:new_children].present? %>
-        <%= render "branches/form_children_new", branch: Branch.new(parent_id: @branch.id), parent: @branch %>
-        <%= link_to 'Annulla', edit_branch_path(@branch), class:"btn" %>
-      <% else %>
-        <%= link_to '+ figlio', edit_branch_path(@branch, new_children: true), class:"btn" %>
       <% end %>
     </div>
   </div>
 <% else %>
+  <%= link_to 'Annulla', edit_branch_path(@branch), class:"btn" %>
   <%= render "index" %>
 <% end %>

@@ -1,6 +1,8 @@
 class BranchesController < ApplicationController
   before_action :set_branch, only: %i[ show edit update destroy updateposition ordinabile ul mappa]
 
+  before_action :cleanup_orphaned_relations, only: [ :show, :edit ]
+
   layout "trees", only: %i[show]
   # GET /branches or /branches.json
   def index
@@ -31,6 +33,13 @@ class BranchesController < ApplicationController
   def show
     @profile = Current.user
     @branch_root = @branch.root
+    if @branch.external_post.present?
+      @branch.external_post.fetch_and_save_content if @branch.external_post.content.blank?
+      @external_post = @branch.external_post.content
+    end
+    if @branch.external_post.present? && @branch.external_post.content.blank?
+      @branch.external_post.fetch_and_save_content
+    end
   end
   def mappa
     @branch = Branch.includes(:children).find(params[:id])
@@ -46,6 +55,7 @@ class BranchesController < ApplicationController
   # GET /branches/new
   def new
     @branch = Current.user.branches.build
+    @branch.build_external_post
   end
 
   # GET /branches/1/edit
@@ -59,7 +69,15 @@ class BranchesController < ApplicationController
     if @branch.parent_id != nil
        @branches = @branches.where.not(id: @branch.parent_id)
     end
+    @branches = Current.user.branches
+    # @branches.each do |branch|
+    #   updates = {}
+    #   updates[:parent_id] = nil unless Branch.exists?(branch.parent_id)
+    #   updates[:child_id]  = nil unless Branch.exists?(branch.child_id)
+    #   branch.update(updates) if updates.any?
+    # end
     @branch_link_parent = @branch.user.branches.where(child_id: @branch.id)
+    @branch.build_external_post if @branch.external_post.nil?
   end
 
   # POST /branches or /branches.json
@@ -111,9 +129,18 @@ class BranchesController < ApplicationController
     def set_branch
       @branch = Branch.find(params.expect(:id))
     end
+    def cleanup_orphaned_relations
+      if @branch.parent_id.present? && !Branch.exists?(@branch.parent_id)
+        @branch.update(parent_id: nil)
+      end
+
+      if @branch.child_id.present? && !Branch.exists?(@branch.child_id)
+        @branch.update(child_id: nil)
+      end
+    end
 
     # Only allow a list of trusted parameters through.
     def branch_params
-      params.expect(branch: [ :user_id, :slug, :parent_id, :content_id, :slug_note, :user_note_username, :child_id, :icon, :position, :published, :visibility, :stato ])
+      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :icon, :position, :published, :visibility, :stato, external_post_attributes: [ :slug, :profile ] ])
     end
 end

@@ -1,6 +1,6 @@
- 
-<div class="prose">
-  <h5 class="m-4">
+<div class="prose flex">
+  <button  type="button" class="btn" data-action="fullscreen#toggle" data-fullscreen-target="button">Fullscreen</button>
+  <h5 class="m-2">
     <% if authenticated? %>
       <% if Current.user == @branch_root.user %>
         <%= link_to 'Dashboard', mappa_branch_path(@branch) %> | 

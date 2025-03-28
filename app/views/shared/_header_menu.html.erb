@@ -3,17 +3,10 @@
     <%= image_tag "circle-slash.svg", size: 24, aria: { hidden: true } %>
     <span class="font-bold">Flowpulse branches</span>
   <% end %>
-
   <nav class="flex items-center gap text-sm text-subtle show@md" style="--column-gap: 1rem">
-   
     <%= link_to "Branches", branches_path %>
-    <%= link_to "Category", categories_path %>
-   
-    <%= link_to "My category", mycategories_path %>
-   
   </nav>
 </div>
-
 <div class="flex items-center gap">
   <button type="button" class="btn avatar">
     <%= image_tag "cartoon.jpg", size: 48, alt: "CN" %>

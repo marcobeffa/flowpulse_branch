@@ -1,0 +1,7 @@
+<%= render @external_post %>
+
+<div class="flex flex-wrap items-center gap mbs-6" style="--row-gap: .5rem">
+  <%= link_to "Edit this external post", edit_external_post_path(@external_post), class: "btn" %>
+  <%= link_to "Back to external posts", external_posts_path, class: "btn" %>
+  <%= button_to "Destroy this external post", @external_post, method: :delete, class: "btn" %>
+</div>

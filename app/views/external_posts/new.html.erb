@@ -1,0 +1,9 @@
+<% content_for :title, "New external post" %>
+
+<h1 class="font-bold text-4xl mbe-4">New external post</h1>
+
+<%= render "form", external_post: @external_post %>
+
+<div class="inline-flex flex-wrap items-center gap mbs-2" style="--row-gap: .5rem">
+  <%= link_to "Back to external posts", external_posts_path, class: "btn" %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_27_185551) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_28_171759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,9 +19,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_185551) do
     t.string "slug"
     t.integer "parent_id"
     t.integer "position"
-    t.integer "content_id"
-    t.string "slug_note"
-    t.string "user_note_username"
     t.integer "child_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -30,6 +27,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_185551) do
     t.integer "stato"
     t.string "icon"
     t.index ["user_id"], name: "index_branches_on_user_id"
+  end
+
+  create_table "external_posts", force: :cascade do |t|
+    t.bigint "branch_id", null: false
+    t.string "api_variabile"
+    t.json "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_external_posts_on_branch_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -52,5 +58,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_27_185551) do
   end
 
   add_foreign_key "branches", "users"
+  add_foreign_key "external_posts", "branches"
   add_foreign_key "sessions", "users"
 end

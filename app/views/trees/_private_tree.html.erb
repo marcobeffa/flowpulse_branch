@@ -1,4 +1,27 @@
-  <!---- header -->
-<%= @branch.id %>
-<%= @branch.content_id %>
-DA inserire la possibilità di selezionare il content id da note.flowpulse.net con le api
+<% if @branch.external_post.present? %>
+  <% if @branch.external_post&.content.present? %>
+    <div>
+      <p>
+        Post collegato da <strong>note.flowpulse.net</strong>:
+        <p>
+          <%= link_to "External post", edit_external_post_path(@branch.external_post), class:"btn m-2" %>
+          <%= link_to "Modifica", edit_external_post_path(@branch.external_post), class:"btn m-2" %>
+          <%= link_to "Elimina", external_post_path(@branch.external_post), method: :delete, data: { confirm: "Sei sicuro?" }, class:"btn m-2" %>
+        </div>
+        <%#= rendered_body(@post.body) if @post.body  %>
+        <div>
+          <div class="flex flex-col gap-2 prose text-gray-800">
+            <%= markdown(@branch.external_post.content["body"]) %>
+          </pre>
+        </div>
+      </div>
+    <% else %>
+      <p>Post collegato ma non fetch:</p>
+      <%= link_to "External post", edit_external_post_path(@branch.external_post), class:"btn" %>
+    <% end %>
+  <% else %>
+    <br>
+    <br>
+    <p>Nessun post esterno collegato.</p>
+    <%= link_to "Collega un post esterno", new_external_post_path(branch_id: @branch.id), class:"btn" %>
+  <% end %>

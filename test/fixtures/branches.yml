@@ -27,9 +27,7 @@ one:
   user: one
   slug: MyString
   parent_id: 1
-  content_id: 1
-  slug_note: MyString
-  user_note_username: MyString
+  
   child_id: 1
   mycategory: one
 
@@ -37,8 +35,6 @@ two:
   user: two
   slug: MyString
   parent_id: 1
-  content_id: 1
-  slug_note: MyString
-  user_note_username: MyString
+  
   child_id: 1
   mycategory: two

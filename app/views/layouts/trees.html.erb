@@ -19,7 +19,15 @@
     <%= stylesheet_link_tag "css-zero/utilities", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body class="header-layout">
-    <%= yield %>
+  <body class="header-layout" data-controller="fullscreen">
+    <div class="sidebar-layout">
+      <aside id="sidebar">
+        <%= render "shared/sidebar_menu" %>
+      </aside>
+      <main id="main" class="container">
+        <%= render "shared/mobile_menu" %>
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>

@@ -14,6 +14,15 @@ class TreesController < ApplicationController
       redirect_to profile_trees_path(@profile.username)
 
     end
+
+
+    if @branch.external_post
+      @branch.external_post.fetch_and_save_content unless @branch.external_post.content.present?
+      @external_post = @branch.external_post.content
+    end
+    if @branch.external_post.present? && @branch.external_post.content.blank?
+      @branch.external_post.fetch_and_save_content
+    end
   end
 
 
