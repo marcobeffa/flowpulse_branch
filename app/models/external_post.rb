@@ -16,7 +16,7 @@
 
 # app/models/external_post.rb
 
-require 'httparty'
+require "httparty"
 
 class ExternalPost < ApplicationRecord
   belongs_to :branch
