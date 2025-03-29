@@ -1,1 +1,32 @@
 <%= render 'branches/show' %>
+<div class="prose container">
+  <div class="flex">
+    <h4>Label</h4>
+    <%= link_to "+ Label", new_branch_path(parent_id: @branch.id, show: true), class: "btn m-2" %>
+  </div>
+  <table class="w-full border-collapse border border-gray-300">
+    <tbody>
+      <% @branch.children.where(label: true).each do |branch| %>
+        <div class="flex">
+          <tr class="hover:bg-gray-50">
+            <td class="border border-gray-300 p-2">id: <%= branch.id %></td>
+            <td class="border border-gray-300 p-2">
+              <strong><%= branch.slug %></strong>
+            </td>
+            <td class="border border-gray-300 p-2">
+              <% if action_name == "edit" %>
+                <%= link_to "+ genitore", edit_branch_path(params[:edit_child_id_for_link], parent_id_for_link: branch.id ), class:"btn" %>
+              <% else %>
+                <div class="flex">
+                  <%= link_to "mostra", mappa_branch_path(branch), class: "btn mi-2" %>
+                  <%= link_to "Modifica", edit_branch_path(branch), class: "btn mi-2" %>
+                </div>
+              <% end %>
+            </td>
+          </tr>
+        </div>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= full_tree_to_hash(@branch) %>

@@ -43,7 +43,7 @@ class Branch < ApplicationRecord
 
   # Validazioni
   validates :slug, presence: true
-  # validates :icon, presence: true
+
   #  validates :slug_note, uniqueness: true, allow_nil: true
   #
   ## Enum per visibilità

@@ -1,0 +1,143 @@
+<div class="">
+  <h1 class="font-bold text-4xl">Flowpulse About</h1>
+  <pre>
+    📦 Business
+    └── 📁 Progetto
+    └── 🔄 Cicli Produttivi
+    └── 📋 1Impegno
+    └── 📆 Calendario
+    ---
+    </pre>
+  <div class="prose">
+    <%= markdown(<<~MD) %>
+    ## 🌲 Sistema a due alberi: Struttura vs Contenuto
+    - 1 Il punto è che se aggiorno la struttura poi di conseguenza l'albero contenuto deve variare 
+    - a meno che faccia 2 tipi di alberi: **albero struttura** e **albero contenuto**
+    - questo si risolve creando 2 tipi di albero: `["struttura",  "contenuto"]`
+    - L'albero **contenuto incorpora** in sé l'albero struttura attuale con cui viene creato
+    - Così ogni albero contenuto ha **incorporato anche l'albero struttura**
+    - Ogni volta che si aggiorna l'albero struttura, la **radice resterà collegata**
+    - Gli alberi contenuto **generati in passato** mantengono la loro struttura originale
+    - L'albero struttura **continua a variare nel tempo** e resta un albero riutilizzabile
+    - È possibile **recuperare le vecchie strutture** dagli alberi contenuto passati
+    - Gli alberi contenuto sono **associati alla radice** dell'albero struttura, che **non cambia**
+    - Anche se l'albero struttura viene aggiornato, la **radice mantiene lo stesso `branch.id`**
+    - Si può decidere di **adottare la struttura** da un albero contenuto precedente
+    2 - Il problema index e show  ma questo lo risolviamo dopo andrebbe fato un albero index con tutte le relazioni e un albero show i dati che deve avere l'indice che ne dici?
+    MD
+  </div>
+  <pre>
+   
+   -  branch(struttura) ->(Project)Project -> su impegno mettere addirittura Task e poi inviti -> Event Contatti Transaction Place
+✅ FLUSSO CONSIGLIATO 
+1. Branch
+Definisce la struttura logica del contenuto (es. progetto, diario, scheda)
+
+Ha nodi con label: true per essere compilati
+
+2. Project
+Una compilazione di una struttura
+
+Collegata a un branch_id e branch_root_id
+
+Salva il tree_hash e body
+
+3. Task (in 1impegno)
+È un impegno schedulato o assegnato
+
+Collegato a un project_id (contenuto da svolgere)
+
+Può avere:
+
+user_id (a chi è assegnato)
+
+status (da fare, in corso, completato)
+
+start_date, due_date
+
+4. UserEvent
+È l’evento eseguito da una persona
+
+Collegato a un task_id
+
+Può essere:
+
+automatico (registrazione)
+
+manuale (azione effettiva)
+
+Può essere associato a:
+
+luogo, contatto, transazione, data_evento
+
+📦 Esempio completo
+Branch: 📦 Business
+
+Project: compilazione per progetto Flowpulse
+
+Task: "Compila il progetto Flowpulse" assegnato a Mario
+
+UserEvent: il giorno 1 aprile, Mario compila i dati
+
+Collegamenti: evento associato al contatto “Mario”, al luogo “Ufficio”, alla data e a un movimento (es. preventivo creato)
+
+🔗 Schema relazionale
+text
+Copia
+Modifica
+Branch (struttura) 
+   ↓ 
+Project (compilazione da struttura)
+   ↓ 
+Task (impegno pianificato)
+   ↓ 
+UserEvent (evento registrato)
+   ↘︎ Contatto
+   ↘︎ Luogo
+   ↘︎ Transazione
+   ↘︎ Data
+✨ Vantaggi
+I Project possono essere riusati in più Task
+
+Ogni Task ha senso nel calendario
+
+Gli Event sono esecuzioni vere e proprie, e puoi collegarli al mondo reale
+
+Vuoi che ti preparo una struttura JSON tipo per ognuno (Branch → Project → Task → UserEvent)?
+O preferisci che partiamo subito con i modelli Rails per organizzarla così?
+
+Modelli rails nel content mettere già gli attori dei task  e poi Task -> Request -> Dataevent 
+così dovrebbe essere anche facile monitorare i cicli perchè nei dataevent realizzati si indica 
+il completamento del task da cui poi si può recuperare 
+il completamento del ciclo. 
+poi mancano transaction contact place
+
+Perfetto, stai costruendo una struttura solida e scalabile. Ti preparo ora i modelli Rails con relazioni e campi base, per supportare:
+
+Branch → struttura logica
+
+Project → compilazione, con attori
+
+Task → impegno operativo
+
+Request → richiesta legata al task
+
+DataEvent → evento reale che registra l’esecuzione
+
+Transaction, Contact, Place → collegamenti "fisici"
+
+
+
+  </pre>
+  Project creato su project.flowpulse.net
+  Titolo: "Corso Igiene Posturale"
+  Attori previsti: Operatore, Tutor, Partecipante
+  Altri dati: Luogo previsto, date ideali
+  Quando approvato → genera una serie di Task su 1impegno.it:
+  "Invita i partecipanti"
+  "Prenota la sala"
+  "Conferma il tutor"
+  ecc.
+  Ogni Task può avere:
+  Request → invito o richiesta specifica
+  DataEvent → evento reale: chi ha fatto cosa, dove, con chi

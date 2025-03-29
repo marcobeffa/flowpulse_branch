@@ -13,13 +13,20 @@
     <%= form.label :user_id, class: "text-sm font-medium leading-none" %>
     <%= form.text_field :user_id, class: "input" %>
   </div>
+  <% if params[:show].present?  %>
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :label, "branch_show " %>
+      <%= form.hidden_field :label, value: true%>
+    </div>
+  <% else %>
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :label, "branch_index " %>
+      <%= form.hidden_field :label %>
+    </div>
+  <% end %>
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :slug, class: "text-sm font-medium leading-none" %>
     <%= form.text_field :slug, class: "input" %>
-  </div>
-  <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :icon, class: "text-sm font-medium leading-none" %>
-    <%= form.text_field :icon, class: "input" %>
   </div>
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :parent_id, class: "text-sm font-medium leading-none" %>

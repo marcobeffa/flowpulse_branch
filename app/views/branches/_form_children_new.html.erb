@@ -1,6 +1,6 @@
 <%= form_with(model: branch, data: { turbo_frame: "branch_children_#{parent.id}" }, class:"flex") do |f| %>
   <%= f.hidden_field :parent_id, value: parent.id %>
-  <%= f.text_field :icon, placeholder:"icona", class:"input" %>
+  <%= f.hidden_field :label, value: false %>
   <%= f.text_field :slug, placeholder: "Nuovo figlio..." %>
   <%= f.submit "Aggiungi", class:"btn" %>
 <% end %>

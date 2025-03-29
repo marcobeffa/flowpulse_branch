@@ -1,10 +1,288 @@
 <div>
-  <h1 class="font-bold text-4xl">Flowpulse Branch</h1>
+  <h1 class="font-bold text-4xl">Business</h1>
+</div>
+<div class="tabs" style="max-inline-size: 400px" data-controller="tabs">
+  <div class="tabs__list" data-action="keydown.left->tabs#prev keydown.right->tabs#next" role="tablist">
+    <button type="button" id="trigger_account"  class="btn tabs__button" data-tabs-target="button" data-action="tabs#select" role="tab" aria-controls="tab_account">Indice</button>
+    <button type="button" id="trigger_password" class="btn tabs__button" data-tabs-target="button" data-action="tabs#select" role="tab" aria-controls="tab_password">Vista</button>
+  </div>
+  <div hidden id="tab_account" data-tabs-target="tab" role="tabpanel" aria-labelledby="trigger_account">
+    <%= render "struttura_indice" %>
+  </div>
+  <div hidden id="tab_password" data-tabs-target="tab" role="tabpanel" aria-labelledby="trigger_password">
+    <%= render "struttura_vista" %>
+  </div>
+</div>
+<br>
+<br>
+<br>
+Struttura:
+<pre>
+🧠 Business Model  
+└── 🧍‍♂️ Attori
+    └── 🔁 Flussi
+
+</pre>
+Contenuto:
+<pre>
+🧠 Business Model  
+├── 🎯 Obiettivo
+├── 🛠️ Strumenti
+└── 📊 Metriche
+</pre>
+<br>
+<br>
+<div>
+  <h1 class="font-bold text-4xl">Igiene Posturale</h1>
 </div>
 <pre>
-📦 Business
-|   ┌── 🔗 -  <a href="/businesses">🧠 Business Model </a> 
+📦 Business (Igiene Posturale)
+|   ┌── 🔗 -  <a href="/businesses">🧠 Business Model </a> (Schede e Programma)
+└── 📁 Progetto (Piattaforma Clienti)
+    
+</pre>
+<br>
+<pre>
+🧠 Business Model – Schede e Programma
+├── 🎯 Obiettivo: Attirare utenti → Utilizzo programma e schede
+├── 🏗️ Struttura:
+│ ├── Fase 1 – Scoperta
+│ │ ├── 📱 Post educativi e reel su postura
+│ │ ├── 🎥 Video brevi con esercizi
+│ │ ├── 📊 Quiz, challenge e storie
+│ │ └── 🔗 Link in bio → landing / quiz gratuito
+│ ├── Fase 2 – Corso online
+│ │ ├── 💡 Lezione introduttiva gratuita o low-cost
+│ │ ├── 📧 Acquisizione email → funnel automatico
+│ │ └── 🚀 Invito al programma completo
+│ └── Fase 3 – Programma & Schede
+│ ├── 🗓️ Programma settimanale 4 settimane
+│ ├── 📄 Schede PDF + video
+│ ├── 📘 Diario della postura
+│ └── 🎁 Upgrade: versione pro con tutor
+├── 🧍‍♂️ Attori
+│ ├── 👤 Creator
+│ │ └── 🔁 Flusso: Creazione → Visualizzazione → Follower → Lead
+│ │ ├── ✅ Task 1: Creare contenuto (post/video)
+│ │ ├── ✅ Task 2: Pubblicare con hashtag e CTA
+│ │ ├── ✅ Task 3: Gestire interazioni
+│ │ └── ✅ Task 4: Portare al link in bio
+│ └── 👥 Utenti / Follower
+│ └── 🔁 Flusso: Scoperta → Interesse → Iscrizione → Utilizzo
+│ ├── ✅ Task 1: Interazione social
+│ ├── ✅ Task 2: Iscrizione al corso
+│ ├── ✅ Task 3: Download schede e inizio programma
+│ └── ✅ Task 4: Completamento e feedback
+├── 🛠️ Strumenti
+│ ├── Canva, CapCut, OBS (contenuti)
+│ ├── Instagram, TikTok (distribuzione)
+│ ├── Carrd, Mailerlite, Notion, Podia, Rails (piattaforma)
+│ └── Google Analytics, Hotjar (analisi)
+└── 📊 Metriche
+├── ❤️ Engagement social
+├── 🔗 Click e iscrizioni
+├── 📥 Download schede
+├── 🧠 Completamento programma
+└── 💬 Feedback e recensioni
+</pre>
+<pre>
+  📦 Business
+|   ├── 🔗 <a href="/businesses">🧠 Business Model</a>
+|   |     ├── 🎯 Obiettivo
+|   |     ├── 🏗️ Struttura
+|   |     ├── 🧍‍♂️ Attori
+|   |     |     └── 🔁 Flussi
+|   |     ├── 🛠️ Strumenti
+|   |     └── 📊 Metriche
+|   |
 └── 📁 Progetto
-    └── 🔄 Cicli Produttivi
-        └── 📌 1Impegno
+     └── 🔄 Cicli Produttivi
+          └── 📋 1Impegno (Agenda)
+               └── 🗓️ Calendario
+                    └── 🧩 Diario
+                         ├── ❤️ Salute
+                         ├── 💼 Lavoro
+                         ├── 🎓 Formazione
+                         └── 🌱 Altro
+</pre>
+<pre>
+  📆 Evento
+├── 📌 Data (o Inizio/Fine)
+├── 📝 Nome Evento
+├── 📋 Attività svolta (testo libero o task connessi)
+├── 🔓 Tipo evento
+│     ├── Pubblico
+│     └── Privato (solo iscritti, team)
+├── 👥 Partecipanti / Iscritti (con possibilità di limitarne il numero)
+│     └── Num max persone
+├── 🌍 Modalità
+│     ├── Online
+│     └── Offline
+├── 📍 Luogo (link o campo geografico)
+├── 📅 Ricorrenza
+│     ├── Evento singolo
+│     └── Evento con più date (collegate)
+└── 🔗 Collegato a
+      ├── Progetto
+      ├── Ciclo Produttivo
+      └── Diario (es. Salute / Formazione / Altro)
+</pre>
+<pre>
+  🗓️ 12 Aprile 2025  
+📝 Lezione 2 – Igiene Posturale  
+📋 Esercizi: mobilità anca + teoria liquido sinoviale  
+🔓 Privato (gruppo chiuso)
+👥 Iscritti: 12/16 persone  
+🌍 Offline – Garda Hotel, Sala Benessere  
+📅 Ciclo: 4 incontri (lezione 2 di 4)  
+🔗 Progetto: Igiene Posturale – Piattaforma Clienti  
+🔗 Diario: ❤️ Salute
+</pre>
+<pre>
+
+
+📦 Igiene Posturale
+├── 📦 Business: 
+│   ├── 🏷️ Nome
+│   ├── 🔗 URL piattaforma (es. igieneposturale.it)
+│   ├── 👤 Responsabile (user_id o nome)
+│   └── 💰 Somma guadagnata / utile netto (calcolabile)
+│
+├── 📁 Progetto
+│   ├── 1 – Programma + Schede
+│       ├── 🧠 Modello di Business
+│   │   ├── 🎯 Obiettivo
+│   │   ├── 🏗️ Programma (con schede ed esercizi)
+│   │   ├── 🧍‍♂️ Ruoli (utente, professionista, tutor)
+│   │   ├── 🛠️ Strumenti (pdf, video, diario, quiz)
+│   │   └── 📊 Metriche
+│   ├── 2 – Corso Online Autonomia
+│   └── 3 – Corso dal Vivo con il Professionista
+│         └── [In futuro] 📆 Modulo Eventi
+│
+└── 📋 1Impegno / Diario / Calendario
+🎁 Vuoi che ti prepari:
+
+
+
+
+
+📦 Business: Igiene Posturale
+├── 🧠 Modello di Business
+│   ├── 🎯 Obiettivo
+│   ├── 🏗️ Programma (con schede ed esercizi)
+│   ├── 🧍‍♂️ Ruoli (utente, professionista, tutor)
+│   ├── 🛠️ Strumenti (pdf, video, diario, quiz)
+│   └── 📊 Metriche
+│
+├── 📁 Progetto
+│   ├── 1 – Programma + Schede
+│   ├── 2 – Corso Online Autonomia
+│   └── 3 – Corso dal Vivo con il Professionista
+│         └── [In futuro] 📆 Modulo Eventi
+│
+└── 📋 1Impegno / Diario / Calendario bene ma ogni progetto ha un modello di business diverso
+
+
+
+📦 Business: Igiene Posturale
+│
+├── 🧠 Modello di Business (generale)
+│   ├── 🎯 Obiettivo
+│   ├── 🧍‍♂️ Ecosistema di ruoli
+│   └── 🌳 Albero dei progetti
+│
+├── 📁 Progetti (ognuno con un proprio modello)
+│   ├── 📁 1 – Programma + Schede
+│   │     ├── 🧠 Business Model: Infoprodotto statico
+│   │     ├── 📘 Schede, materiali, pdf
+│   │     └── 📊 Metriche: download, completamento, feedback
+│   │
+│   ├── 📁 2 – Corso Online in Autonomia
+│   │     ├── 🧠 Business Model: accesso digitale, funnel, quiz
+│   │     ├── 🎥 Video-lezioni
+│   │     └── 📊 Metriche: completamento, abbandoni, vendite
+│   │
+│   └── 📁 3 – Corso con il Professionista
+│         ├── 🧠 Business Model: corso dal vivo, revenue sharing
+│         ├── 👨‍🏫 Tutor, centri, gruppi
+│         ├── 🔄 Cicli Produttivi
+│         ├── 📋 1Impegno (agenda, richieste, task)
+│         └── 📆 [Futuro] Modulo Eventi (lezioni, sedi, iscrizioni)
+│
+└── 📊 Visione Unificata / Dashboard
+     ├── Diario utenti
+     ├── Task, attività e flussi
+     └── Analisi incrociata tra progetti
+
+
+
+
+
+
+
+
+📁 Progetto: Corso Online Autonomo
+└── 🧠 Business Model
+    ├── 🎯 Obiettivo
+    ├── 🏗️ Struttura (prodotti, accesso, funnel)
+    ├── 🧍‍♂️ Attori (utenti, professionisti, automazioni)
+    ├── 🛠️ Strumenti (PDF, Video, Quiz, etc.)
+    └── 📊 Metriche (conversione, vendite, completamento)
+
+
+1️⃣ Programma + Schede
+È l’infoprodotto base.
+
+Nessun evento live.
+
+Contenuto strutturato e sempreverde.
+
+2️⃣ Corso Online in Autonomia
+Il cliente compra o accede.
+
+Segue un percorso pre-registrato.
+
+Possono esserci quiz, diario, tracciamento avanzamento.
+
+Nessun bisogno di gestire orari o luoghi.
+
+3️⃣ Corso con il Professionista
+Live, con orari, gruppi, iscrizioni.
+
+Qui potrebbero servire gli eventi, ma solo se diventa una parte importante della vendita (es. calendario corsi aperti al pubblico).
+
+
+
+
+
+</pre>
+<pre>
+  branch_root:boolean
+  enum tree_type: {
+  principale: 0,
+  indice_struttura: 1,
+  indice_contenuto: 2,
+  vista_struttura: 3,
+  vista_contenuto: 4
+}
+
+
+</pre>
+<pre>
+ 
+- 1 Il punto è che se aggiorno la struttura poi di conseguenza l'albero contenuto deve variare 
+    - a meno che faccia 2 tipi di alberi albero struttura  albero contenuto
+    - questo si risove creando 2 tipi di albero ["struttura",  "contenuto"] 
+    - L'albero contenuto incorpora in se l'albero struttura attuale con cui viene creato 
+    - così ogni albero contenuto ha incorporato anche l'albero struttura 
+    - ogni volta si aggiorna l'albero struttura la radice resterà collegata 
+    - agli alberi contenuti generati, ma potrà avere la sua struttura completamente diversa di una versione precedente.   
+    - l'albero struttura continua a variare nel tempo e resta un albero che ogni volta viene utilizzato.
+    - ma volendo si può andare a recuperare le strutture vecchie,
+    - dagli alberi contenuto che sono associati alla radice che è l'unica che non varia.
+    - gli alberi contenuto sono comunque legati all'albero struttura appunto dall'id della radice 
+    - anche se l'albero struttura è variato la radice resta sempre con il suo branch.id 
+    - si può poi decidere di adottare un albero struttura di un contenuto passato. 
+2 - Il problema index e show  ma questo lo risolviamo dopo andrebbe fato un albero index con tutte le relazioni e un albero show i dati che deve avere l'indice che ne dici?
 </pre>

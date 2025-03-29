@@ -15,7 +15,6 @@
     <tr class="bg-gray-100">
       <th class="border border-gray-300 p-2 text-left">User email</th>
       <th class="border border-gray-300 p-2 text-left">id</th>
-      <th class="border border-gray-300 p-2 text-left">Icon</th>
       <th class="border border-gray-300 p-2 text-left">Nome</th>
       <th class="border border-gray-300 p-2 text-left">Azioni</th>
     </tr>
@@ -25,7 +24,6 @@
       <tr class="hover:bg-gray-50">
         <td class="border border-gray-300 p-2"><%= branch.user.email_address %></td>
         <td class="border border-gray-300 p-2"><%= branch.id %></td>
-        <td class="border border-gray-300 p-2"><%= branch.icon %></td>
         <td class="border border-gray-300 p-2">
           <% if branch.parent_id %>
             <%= Current.user.branches.find(branch.parent_id).slug  %>

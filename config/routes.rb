@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :businesses, only: %i[ show index ]
   resources :projects, only: %i[ show index ]
   get "pages/home"
+ get "about", to: "pages#about"
   resource :session
   resources :passwords, param: :token
 

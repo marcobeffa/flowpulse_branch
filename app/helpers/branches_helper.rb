@@ -10,20 +10,29 @@ module BranchesHelper
 
     parent_ids.reverse
   end
+  def full_tree_to_hash(branch)
+    return {} if branch.nil?
+  
+    {
+      id: branch.id,
+      name: branch.slug.strip, # Rimuove spazi prima/dopo
+      label: branch.label,
+      children: branch.children.map { |child| full_tree_to_hash(child) }
+    }
+  end
   def tree_to_hash(branch)
     return {} if branch.nil?
 
     {
       id: branch.id,
       name: branch.slug.strip,  # Rimuove spazi prima/dopo
-      icon: (branch.icon || "\u2796").strip,
-      children: branch.children.map { |child| tree_to_hash(child) }
+      children: branch.children.where(label: false).map { |child| tree_to_hash(child) }
     }
   end
   def hash_to_ascii(tree, prefix = "", parent_prefix = "", is_root = true)
     return "" if tree.nil? || tree.empty?
 
-    node_link = "#{tree[:icon]} <a href='/branches/#{tree[:id]}/mappa'>#{tree[:name]}</a>"
+    node_link = "<a href='/branches/#{tree[:id]}/mappa'>#{tree[:name]}</a>"
     tree_content = is_root ? "#{node_link}\n" : "#{prefix}#{node_link}\n"
 
     tree[:children].each_with_index do |child, index|

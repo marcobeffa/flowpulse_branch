@@ -4,14 +4,15 @@ class TreesController < ApplicationController
 
   def index
    @branch =  @profile.branches.published.where(visibility: "pubblico").order(publication_date: :desc)
+
   end
 
   def show
     @branch =  @profile.branches.find(params.expect(:id))
-    @branch_root = @branch.root
+    
     unless @branch.published == true &&  @branch.visibility == "pubblico"
 
-      redirect_to profile_trees_path(@profile.username)
+      redirect_to root_path(@profile.username)
 
     end
 
@@ -23,6 +24,8 @@ class TreesController < ApplicationController
     if @branch.external_post.present? && @branch.external_post.content.blank?
       @branch.external_post.fetch_and_save_content
     end
+
+    @branch_root = @branch.root
   end
 
 

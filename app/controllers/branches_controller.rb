@@ -141,6 +141,6 @@ class BranchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def branch_params
-      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :icon, :position, :published, :visibility, :stato, external_post_attributes: [ :slug, :profile ] ])
+      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :position, :published, :visibility, :stato, :label, external_post_attributes: [ :slug, :profile ] ])
     end
 end

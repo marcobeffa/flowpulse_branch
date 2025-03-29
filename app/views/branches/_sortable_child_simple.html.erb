@@ -1,4 +1,5 @@
-<li class="list-group-item" data-id="<%= branch.id %>">
+<li class="list-group-item"  data-id="<%= branch.id %>">
+  <%= 'label:' if branch.label == true %>
   <%= branch.slug %>
   <% if branch.children.any? %>
     <ul class="nested-sortable" > <!--data-sortable-target="list"-->

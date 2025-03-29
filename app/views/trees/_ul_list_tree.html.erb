@@ -1,21 +1,23 @@
 <ul>
   <% branches.order(:position).each do |branch| %>
-    <% if (branch.visibility == "pubblico" && branch.published == true && controller_name == "trees") || controller_name == "branches"  %>
-      <li  class="<%= "border" if controller_name == "branches" %>">
-      <% end %>
-      <% if controller_name == "branches" %>
-        <%= link_to branch.slug, branch_path(branch) %>
-        <%= render 'trees/pubblication_tree', branch: branch %>
-      <% else %>
-        <% if (branch.visibility == "pubblico" && branch.published == true)  %>
-          <%= link_to branch.slug, profile_tree_path(branch.user.username, branch) %>
-        <% end %>
-      <% end %>
-      <% if branch.children.any? { |b| b.parent_id == branch.id } %>
-        <%= render "trees/ul_list_tree", branches: branch.children, parent_id: branch.id %>
-      <% end %>
+    <% if branch.label != true %>
       <% if (branch.visibility == "pubblico" && branch.published == true && controller_name == "trees") || controller_name == "branches"  %>
-      </li>
+        <li  class="<%= "border" if controller_name == "branches" %>">
+        <% end %>
+        <% if controller_name == "branches" %>
+          <%= link_to branch.slug, branch_path(branch) %>
+          <%= render 'trees/pubblication_tree', branch: branch %>
+        <% else %>
+          <% if (branch.visibility == "pubblico" && branch.published == true)  %>
+            <%= link_to branch.slug, profile_tree_path(branch.user.username, branch) %>
+          <% end %>
+        <% end %>
+        <% if branch.children.any? { |b| b.parent_id == branch.id } %>
+          <%= render "trees/ul_list_tree", branches: branch.children, parent_id: branch.id %>
+        <% end %>
+        <% if (branch.visibility == "pubblico" && branch.published == true && controller_name == "trees") || controller_name == "branches"  %>
+        </li>
+      <% end %>
     <% end %>
   <% end %>
 </ul>
