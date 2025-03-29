@@ -33,8 +33,8 @@ class Branch < ApplicationRecord
   has_many :children, class_name: "Branch", foreign_key: "parent_id", dependent: :nullify
 
   # Collegamenti tra rami separati
-  belongs_to :link_child, class_name: "Branch", foreign_key: "child_id", optional: true
-  has_one :linked_parent, class_name: "Branch", foreign_key: "child_id", dependent: :nullify
+  belongs_to :child_link, class_name: "Branch", foreign_key: "child_id", optional: true
+  has_many :parent_links, class_name: "Branch", foreign_key: "child_id", dependent: :nullify
 
 
   # Gestisce l'ordine tra i figli dello stesso parent
