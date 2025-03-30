@@ -3,4 +3,5 @@
   <h1 class="font-bold text-4xl">Branches</h1>
   <%= link_to "New branch", new_branch_path, class: "btn btn--primary" %>
 </div>
+<%= link_to "📤 Importa albero JSON", import_tree_form_branches_path, class: "btn btn-outline-primary" %>
 <%= render 'branches/index' %>

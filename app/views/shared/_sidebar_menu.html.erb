@@ -22,7 +22,7 @@
       <% end %>
     <% end %>
     <div class="prose">
-      <h5><%= link_to @branch_root.slug, branch_path(@branch_root) %></h5>
+      <h5><%= link_to @branch_root.slug, profile_tree_path( @branch_root.user.username,  @branch_root)  %></h5>
     </div>
     <%= render 'trees/ul_list_tree', branches: @branch_root.children, branch: @branch,  parent_id: nil %>
   </div>

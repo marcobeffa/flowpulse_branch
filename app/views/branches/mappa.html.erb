@@ -40,7 +40,6 @@
       <% end %>
     </tbody>
   </table>
-  <%= link_to "📤 Importa albero JSON", import_tree_form_branches_path, class: "btn btn-outline-primary" %>
   <%= link_to "⬇️ Scarica JSON", download_tree_branch_path(@branch), data: { turbo: false }, class: "btn" %>
   <pre><%= JSON.pretty_generate(full_tree_to_hash(@branch)) %></pre>
 </div>
