@@ -21,6 +21,11 @@
       <% @branch.children.where(label: true).each do |branch| %>
         <div class="flex">
           <tr class="hover:bg-gray-50">
+            <td class="border border-gray-300 p-2">
+              <%= link_to pubblica_branch_path(branch) do %>
+                <%= branch.published %> - <%= branch.visibility %>
+              <% end %>
+            </td>
             <td class="border border-gray-300 p-2">id: <%= branch.id %></td>
             <td class="border border-gray-300 p-2">
               <strong><%= branch.slug %></strong>

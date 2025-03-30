@@ -1,0 +1,10 @@
+<br>
+hai pubblicato: <%= link_to @branch.slug, mappa_branch_path(@branch.id), class: "btn" %>
+<br>
+<%= link_to "<- radice", mappa_branch_path(@branch.root.id), class: "btn" %>
+<br>
+<%= @branch.visibility %>
+<br>
+<%= @branch.published %>
+<br>
+<%= link_to "Spubblica", spubblica_branch_path(@branch.id), class: "btn" %>

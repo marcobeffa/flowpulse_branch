@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       get :ul
       get :mappa
       get :download_tree
+      get :pubblica
+      get :spubblica
     end
     collection do
       get :import_tree_form

@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
   include BranchesHelper
-  before_action :set_branch, only: %i[ show edit update destroy updateposition ordinabile ul mappa download_tree]
+  before_action :set_branch, only: %i[ show edit update destroy updateposition ordinabile ul mappa download_tree pubblica spubblica]
 
   before_action :cleanup_orphaned_relations, only: [ :show, :edit ]
 
@@ -56,6 +56,13 @@ class BranchesController < ApplicationController
 
     end
   end
+  def pubblica
+    @branch.update(visibility: "pubblico", published: true)
+  end
+  def spubblica
+    @branch.update(visibility: "privato", published: false)
+  end
+
   def mappa
     @branch = Branch.includes(:children).find(params[:id])
   end

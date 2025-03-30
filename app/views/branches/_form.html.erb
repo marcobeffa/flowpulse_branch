@@ -23,11 +23,12 @@
       <%= form.label :label, "branch_index " %>
       <%= form.hidden_field :label %>
     </div>
+  <% else %>
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :label %>
+      <%= form.check_box :label %>
+    </div>
   <% end %>
-  <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :published, "Pubblicato?" %>
-    <%= form.check_box :published %>
-  </div>
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :slug, class: "text-sm font-medium leading-none" %>
     <%= form.text_field :slug, class: "input" %>
