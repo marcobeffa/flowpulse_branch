@@ -1,18 +1,15 @@
 class Api::V1::TreesController < ApplicationController
- 
-
-      
         def show
           branch = Branch.find_by(id: params[:id])
           if branch
             render json: api_full_tree_to_hash(branch)
           else
-            render json: { error: 'Branch not found' }, status: :not_found
+            render json: { error: "Branch not found" }, status: :not_found
           end
         end
-  
+
         private
-  
+
         def api_full_tree_to_hash(branch)
           return {} if branch.nil?
           {
@@ -23,9 +20,9 @@ class Api::V1::TreesController < ApplicationController
             children: branch.children.where(visibility: "pubblico", published: true).order(:position).map { |child| api_full_tree_to_hash(child) }
           }
         end
-  
+
         def parent_links_tree_to_hash(parent_link)
-          return {} if parent_link.nil? 
+          return {} if parent_link.nil?
           {
           parent_link_id: (parent_link.id),
           parent_link_name: (parent_link.slug),
@@ -33,5 +30,4 @@ class Api::V1::TreesController < ApplicationController
           grand_parent_name: (parent_link.parent.slug if parent_link.parent.present?)
           }
         end
-    
 end

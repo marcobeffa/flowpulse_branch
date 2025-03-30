@@ -4,12 +4,11 @@ class TreesController < ApplicationController
 
   def index
    @branch =  @profile.branches.published.where(visibility: "pubblico").order(publication_date: :desc)
-
   end
 
   def show
     @branch =  @profile.branches.find(params.expect(:id))
-    
+
     unless @branch.published == true &&  @branch.visibility == "pubblico"
 
       redirect_to root_path(@profile.username)

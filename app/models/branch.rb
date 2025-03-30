@@ -22,7 +22,6 @@
 #
 
 class Branch < ApplicationRecord
-  
   belongs_to :user
   belongs_to :mycategory, optional: true
   has_one :external_post, dependent: :destroy

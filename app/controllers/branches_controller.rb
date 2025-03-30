@@ -1,5 +1,4 @@
 class BranchesController < ApplicationController
-  
   before_action :set_branch, only: %i[ show edit update destroy updateposition ordinabile ul mappa]
 
   before_action :cleanup_orphaned_relations, only: [ :show, :edit ]
