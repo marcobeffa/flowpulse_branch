@@ -20,8 +20,8 @@ module BranchesHelper
     {
       id: branch.id,
       name: branch.slug.strip,
-      visibilità: branch.visibility_icon,
-      pubblicato: branch.published_icon,
+      visibilità: branch.visibility,
+      pubblicato: branch.published,
       label: branch.label,
       parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       link_child_name: branch.child_link&.slug,

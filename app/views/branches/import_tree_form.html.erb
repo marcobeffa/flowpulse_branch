@@ -1,0 +1,7 @@
+<h2>📤 Importa un albero JSON</h2>
+<%= form_with url: import_tree_preview_branches_path, method: :post, local: true, multipart: true, data: { turbo: false } do %>
+  <label>Seleziona file JSON:</label><br>
+  <%= file_field_tag :tree_file, accept: "application/json" %><br>
+  <br>
+  <%= submit_tag "Carica e Visualizza", class: "btn btn-success" %>
+<% end %>

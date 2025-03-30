@@ -1,5 +1,6 @@
 class BranchesController < ApplicationController
-  before_action :set_branch, only: %i[ show edit update destroy updateposition ordinabile ul mappa]
+  include BranchesHelper
+  before_action :set_branch, only: %i[ show edit update destroy updateposition ordinabile ul mappa download_tree]
 
   before_action :cleanup_orphaned_relations, only: [ :show, :edit ]
 
@@ -41,6 +42,20 @@ class BranchesController < ApplicationController
       @branch.external_post.fetch_and_save_content
     end
   end
+  def download_tree
+    if @branch.user != Current.user
+      redirect_to branches_path, alert: "Non autorizzato"
+      nil
+    else
+      filename = "#{@branch.slug.parameterize}.json"
+      tree = full_tree_to_hash(@branch)
+
+      send_data JSON.pretty_generate(tree),
+                filename: filename,
+                type: "application/json"
+
+    end
+  end
   def mappa
     @branch = Branch.includes(:children).find(params[:id])
   end
@@ -50,6 +65,94 @@ class BranchesController < ApplicationController
 
   def ul
   end
+
+
+
+  def build_tree_recursive(data, parent, user, id_map, links_to_create, child_links_to_assign)
+    branch = Branch.create!(
+      user: user,
+      slug: data["name"],
+      visibility: data["visibilità"],
+      published: data["pubblicato"],
+      label: data["label"],
+      parent: parent
+    )
+
+    id_map[data["id"]] = branch
+
+    # Salva link_child_id da assegnare dopo
+    if data["link_child_id"]
+      child_links_to_assign << [ branch, data["link_child_id"] ]
+    end
+
+    # Salva i parent_links da creare dopo
+    Array(data["parent_links"]).each do |pl|
+      links_to_create << {
+        child_id: data["id"],
+        grand_parent_id: pl["grand_parent_id"],
+        name: pl["parent_link_name"],
+        position: pl["position"]
+      }
+    end
+
+    # Ricorsione su figli
+    data["children"].each do |child_data|
+      build_tree_recursive(child_data, branch, user, id_map, links_to_create, child_links_to_assign)
+    end
+
+    branch
+  end
+  def import_tree_preview
+    if params[:tree_file].blank?
+      redirect_to import_tree_form_branches_path, alert: "Seleziona un file JSON"
+      return
+    end
+
+    uploaded_file = params[:tree_file]
+
+    # ✅ Verifica che sia un file valido
+    unless uploaded_file.respond_to?(:read)
+      redirect_to import_tree_form_branches_path, alert: "File non valido"
+      return
+    end
+
+    file_content = uploaded_file.read
+    @tree_data = JSON.parse(file_content)
+
+  rescue JSON::ParserError => e
+    redirect_to import_tree_form_branches_path, alert: "Errore nel file JSON: #{e.message}"
+  end
+
+  def import_tree_execute
+    tree_data = JSON.parse(params[:tree_json])
+    id_map = {}
+    links_to_create = []
+    child_links_to_assign = []
+
+    root_branch = build_tree_recursive(tree_data, nil, Current.user, id_map, links_to_create, child_links_to_assign)
+
+    child_links_to_assign.each do |branch, old_link_id|
+      new_child = id_map[old_link_id]
+      branch.update(child_id: new_child.id) if new_child
+    end
+
+    links_to_create.each do |link_data|
+      child = id_map[link_data[:child_id]]
+      parent = id_map[link_data[:grand_parent_id]]
+      if child && parent
+        ParentLink.create!(
+          parent: parent,
+          child: child,
+          name: link_data[:name],
+          position: link_data[:position] || 0
+        )
+      end
+    end
+
+    redirect_to branch_path(root_branch), notice: "Albero importato correttamente!"
+  end
+
+
 
 
   # GET /branches/new
@@ -125,6 +228,36 @@ class BranchesController < ApplicationController
   end
 
   private
+
+  def import_tree_from_hash(data, parent, user, id_map)
+    branch = Branch.create!(
+      user: user,
+      slug: data["name"],
+      visibility: data["visibilità"],
+      published: data["pubblicato"],
+      label: data["label"],
+      parent: parent
+    )
+
+    id_map[data["id"]] = branch
+
+    Array(data["parent_links"]).each do |pl|
+      parent_branch = id_map[pl["grand_parent_id"]]
+      if parent_branch
+        ParentLink.create!(
+          parent: parent_branch,
+          child: branch,
+          name: pl["parent_link_name"]
+        )
+      end
+    end
+
+    data["children"].each do |child|
+      import_tree_from_hash(child, branch, user, id_map)
+    end
+
+    branch
+  end
     # Use callbacks to share common setup or constraints between actions.
     def set_branch
       @branch = Branch.find(params.expect(:id))

@@ -1,0 +1,6 @@
+<h2>👀 Anteprima JSON</h2>
+<pre><%= JSON.pretty_generate(@tree_data) %></pre>
+<%= form_with url: import_tree_execute_branches_path, method: :post, local: true do %>
+  <%= hidden_field_tag :tree_json, JSON.dump(@tree_data) %>
+  <%= submit_tag "✅ Importa", class: "btn btn-primary" %>
+<% end %>

@@ -21,8 +21,13 @@ Rails.application.routes.draw do
       get :updateposition
       get :ordinabile
       get :ul
-
       get :mappa
+      get :download_tree
+    end
+    collection do
+      get :import_tree_form
+      post :import_tree_preview
+      post :import_tree_execute
     end
   end
   # match "/branches/:id/update_position", to: "branches#updateposition", via: :patch
