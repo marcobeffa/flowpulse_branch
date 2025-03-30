@@ -18,6 +18,8 @@ class Api::V1::TreesController < ApplicationController
       name: branch.slug.strip, # Rimuove spazi prima/dopo
       label: branch.label,
       parent_links:  branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
+      link_child_name: branch.child_link&.slug,
+      link_child_id: branch.child_link&.id,
       children: branch.children.where(visibility: "pubblico", published: true).order(:position).map { |child| api_full_tree_to_hash(child) }
     }
   end

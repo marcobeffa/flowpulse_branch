@@ -30,8 +30,14 @@
             ->
           <% end %>
           <strong><%= branch.slug %></strong>
-          <% if branch.child_id %>
-            -> <%= Current.user.branches.find(branch.child_id).slug  %>
+          <% if branch.child_id.present? %>
+            <% child = Current.user.branches.find_by(id: branch.child_id) %>
+            <% if child.present? %>
+              -> <%= child.slug %>
+            <% else %>
+              <span style="color: red">⚠️ Link dissociato</span>
+              <%= link_to "Associa nuovo", edit_branch_path(branch), class: "btn btn-sm" %>
+            <% end %>
           <% end %>
         </td>
         <td class="border border-gray-300 p-2">
