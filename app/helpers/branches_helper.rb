@@ -24,7 +24,9 @@ module BranchesHelper
       pubblicato: branch.published_icon,
       label: branch.label,
       parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
-      children: branch.children.order(:position).map { |child| full_tree_to_hash(child) }
+      link_child_name: branch.child_link&.slug,
+      link_child_id: branch.child_link&.id,
+      children: branch.children.order(:position).map { |child| full_tree_to_hash(child) } 
     }
   end
 
@@ -35,6 +37,8 @@ module BranchesHelper
       id: branch.id,
       name: "#{branch.slug.strip} [#{branch.visibility_icon} #{branch.published_icon}]",
       parent_links:  branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
+      link_child_name: branch.child_link&.slug,
+      link_child_id: branch.child_link&.id,
       children: branch.children.order(:position).where(label: false).map { |child| tree_to_hash(child) }
     }
   end
@@ -56,7 +60,10 @@ module BranchesHelper
 
     # 1. Nodo corrente
     node_link = "<a href='/branches/#{tree[:id]}/mappa'>#{tree[:name]}</a>"
-
+    if tree[:link_child_id]
+      link_child = " - <a href='/branches/#{tree[:link_child_id]}/mappa'>#{tree[:link_child_name]}</a>"
+    end
+    
     # 2. Calcola righe parent_links (con la stessa indentazione del nodo)
     if tree[:parent_links].present?
       bullet_prefix = prefix.gsub(/(└──|├──)/, "│  ").gsub(/[^│]/, " ")
@@ -68,12 +75,12 @@ module BranchesHelper
         parent_link_html = "<a href='/branches/#{link[:parent_link_id]}'>#{link[:parent_link_name]}</a>"
         grand_parent_html = link[:grand_parent_name].present? ? "<a href='/branches/#{link[:grand_parent_id]}'>#{link[:grand_parent_name]}</a>" : ""
 
-        output += "#{bullet_prefix}#{connector} #{parent_link_html} - #{grand_parent_html}\n"
+        output += "#{bullet_prefix}#{connector} #{parent_link_html} #{grand_parent_html}\n"
       end
     end
 
     # 3. Stampa il nodo
-    output += is_root ? "#{node_link}\n" : "#{prefix}#{node_link}\n"
+    output += is_root ? "#{node_link}\n" : "#{prefix}#{node_link}#{link_child}\n"
 
     # 4. Figli ricorsivi
     tree[:children].each_with_index do |child, index|

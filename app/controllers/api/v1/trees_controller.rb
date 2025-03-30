@@ -1,5 +1,5 @@
 class Api::V1::TreesController < ApplicationController
-  allow_unauthenticated_access only: [ :index, :show ]
+  allow_unauthenticated_access only: [ :show ]
   def show
     branch = Branch.find_by(id: params[:id])
     if branch
