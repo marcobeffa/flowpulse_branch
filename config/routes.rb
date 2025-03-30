@@ -1,15 +1,18 @@
 Rails.application.routes.draw do
-  resources :external_posts, except: [ :index, :show ]
-  resources :categories do
-    post "copy_to_mycategory", on: :member, to: "mycategories#create_from_category"
+  namespace :api do
+    namespace :v1 do
+      resources :trees, only: [:show]
+    end
   end
+
+  resources :external_posts, except: [ :index, :show ]
   resources :profiles do
     resources :trees, only: %i[ show index ]
   end
   resources :businesses, only: %i[ show index ]
   resources :projects, only: %i[ show index ]
   get "pages/home"
- get "about", to: "pages#about"
+  get "about", to: "pages#about"
   resource :session
   resources :passwords, param: :token
 

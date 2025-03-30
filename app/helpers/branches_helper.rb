@@ -10,24 +10,30 @@ module BranchesHelper
 
     parent_ids.reverse
   end
+  
+
+  
+
   def full_tree_to_hash(branch)
     return {} if branch.nil?
+
     {
       id: branch.id,
-      name: branch.slug.strip, # Rimuove spazi prima/dopo
+      name: branch.slug.strip,
+      visibilità: branch.visibility_icon,
+      pubblicato: branch.published_icon,
       label: branch.label,
-      parent_links:  branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) }, 
+      parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       children: branch.children.order(:position).map { |child| full_tree_to_hash(child) }
     }
   end
-  
 
   def tree_to_hash(branch)
     return {} if branch.nil?
 
     {
       id: branch.id,
-      name: branch.slug.strip,  # Rimuove spazi prima/dopo
+      name: "#{branch.slug.strip} [#{branch.visibility_icon} #{branch.published_icon}]", 
       parent_links:  branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       children: branch.children.order(:position).where(label: false).map { |child| tree_to_hash(child) }
     }
@@ -42,6 +48,7 @@ module BranchesHelper
     grand_parent_name: (parent_link.parent.slug if parent_link.parent.present?)
     }
   end
+
   def hash_to_ascii(tree, prefix = "", parent_prefix = "", is_root = true)
     return "" if tree.nil? || tree.empty?
   

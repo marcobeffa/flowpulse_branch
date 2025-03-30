@@ -22,6 +22,7 @@
 #
 
 class Branch < ApplicationRecord
+  
   belongs_to :user
   belongs_to :mycategory, optional: true
   has_one :external_post, dependent: :destroy
@@ -55,7 +56,19 @@ class Branch < ApplicationRecord
     organizzata: 1,     # La nota è stata organizzata per argomento
     corretto: 2        # La nota è stata strutturata in modo logico
   }
-  scope :published, -> { where(published: true) }
+  VISIBILITY_ICONS = {
+    "privato" => "🔒",
+    "iscritti" => "👥",
+    "pubblico" => "🌍"
+  }
+
+  def visibility_icon
+    VISIBILITY_ICONS[visibility]
+  end
+
+  def published_icon
+    published ? "✅" : "❌"
+  end
   def root
     self.class.where(id: self_and_ancestors_ids.first).first
   end

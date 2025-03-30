@@ -1,3 +1,15 @@
+<div class="flex">
+  <a href="<%= url_for(controller: 'api/v1/trees', action: 'show', id: @branch.id, only_path: false) %>" class="mi-2 btn">
+    Vai all'api per vedere l'albero pubblico
+  </a>
+  <div class="input input--actor flex items-center gap" data-controller="copyable-input">
+    <%= text_field_tag "copyable_input", url_for(controller: 'api/v1/trees', action: 'show', id: @branch.id, only_path: false), readonly: "readonly", data: { copyable_input_target: "input" } %>
+    <button type="button" class="btn btn--plain" data-copyable-input-target="button" data-action="copyable-input#copy">
+      <%= image_tag "copy.svg", size: 20, aria: { hidden: true } %>
+      <span class="sr-only">Copy to clipboard</span>
+    </button>
+  </div>
+</div>
 <%= render 'branches/show' %>
 <div class="prose container">
   <div class="flex">
@@ -28,5 +40,5 @@
       <% end %>
     </tbody>
   </table>
+  <pre><%= JSON.pretty_generate(full_tree_to_hash(@branch)) %></pre>
 </div>
-<%= full_tree_to_hash(@branch) %>
