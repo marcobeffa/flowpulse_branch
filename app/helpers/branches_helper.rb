@@ -26,7 +26,7 @@ module BranchesHelper
       parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       link_child_name: branch.child_link&.slug,
       link_child_id: branch.child_link&.id,
-      children: branch.children.order(:position).map { |child| full_tree_to_hash(child) } 
+      children: branch.children.order(:position).map { |child| full_tree_to_hash(child) }
     }
   end
 
@@ -63,7 +63,7 @@ module BranchesHelper
     if tree[:link_child_id]
       link_child = " - <a href='/branches/#{tree[:link_child_id]}/mappa'>#{tree[:link_child_name]}</a>"
     end
-    
+
     # 2. Calcola righe parent_links (con la stessa indentazione del nodo)
     if tree[:parent_links].present?
       bullet_prefix = prefix.gsub(/(└──|├──)/, "│  ").gsub(/[^│]/, " ")
