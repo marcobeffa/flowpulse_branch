@@ -7,7 +7,7 @@ class BranchesController < ApplicationController
   layout "trees", only: %i[show]
   # GET /branches or /branches.json
   def index
-    if params[:structure].nil? 
+    if params[:structure].nil?
      @branches = Current.user.branches.where(parent_id: nil, structure: true).order(:position)
     else
       @branches = Current.user.branches.where(parent_id: nil, structure: false).order(:position)
