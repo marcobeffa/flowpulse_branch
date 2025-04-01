@@ -30,6 +30,10 @@
     </div>
   <% end %>
   <div class="flex flex-col items-start gap-half mbe-4">
+    <%= form.label :structure, "Structure?" %>
+    <%= form.check_box :structure %>
+  </div>
+  <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :slug, class: "text-sm font-medium leading-none" %>
     <%= form.text_field :slug, class: "input" %>
   </div>

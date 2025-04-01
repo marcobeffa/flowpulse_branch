@@ -7,7 +7,11 @@ class BranchesController < ApplicationController
   layout "trees", only: %i[show]
   # GET /branches or /branches.json
   def index
-    @branches = Current.user.branches.where(parent_id: nil).order(:position)
+    if params[:structure].nil? 
+     @branches = Current.user.branches.where(parent_id: nil, structure: true).order(:position)
+    else
+      @branches = Current.user.branches.where(parent_id: nil, structure: false).order(:position)
+    end
   end
   def updateposition
     @branch_root = @branch.root
@@ -281,6 +285,6 @@ class BranchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def branch_params
-      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :position, :published, :visibility, :stato, :label, external_post_attributes: [ :slug, :profile ] ])
+      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :position, :published, :visibility, :stato, :structure, :label, external_post_attributes: [ :slug, :profile ] ])
     end
 end

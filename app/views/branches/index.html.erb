@@ -4,4 +4,10 @@
   <%= link_to "New branch", new_branch_path, class: "btn btn--primary" %>
 </div>
 <%= link_to "📤 Importa albero JSON", import_tree_form_branches_path, class: "btn btn-outline-primary" %>
+<nav class="tabs__list" aria-label="Home and Settings">
+  <%= link_to "Struttura", branches_path, class: "btn tabs__button", aria: { current: "page" } if params[:structure].nil? %>
+  <%= link_to "Struttura", branches_path, class: "btn tabs__button" if params[:structure].present?  %>
+  <%= link_to "Contenuto", branches_path(structure: false), class: "btn tabs__button", aria: { current: "page" } if params[:structure].present? %>
+  <%= link_to "Contenuto", branches_path(structure: false), class: "btn tabs__button" if params[:structure].nil? %>
+</nav>
 <%= render 'branches/index' %>
