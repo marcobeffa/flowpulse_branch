@@ -3,7 +3,7 @@
   <%= branch.slug %>
   <% if branch.children.any? %>
     <ul class="nested-sortable" > <!--data-sortable-target="list"-->
-      <%= render partial: "sortable_child_simple", collection: branch.children.order(:position), as: :branch %>
+      <%= render partial: "sortable_child_simple", collection: branch.children.where(label: false).order(:position), as: :branch %>
     </ul>
   <% else %>
     <ul class="nested-sortable"><!--data-sortable-target="list"-->
