@@ -57,7 +57,7 @@
         <!-- Turbo Frame per figli -->
         <!--turbo-frame id="branch_children_<%= @branch.id %>"-->
         <div class="children">
-          <% @branch.children.each do |child| %>
+          <% @branch.children.where(label: false).each do |child| %>
             <div class="child-node">
               <pre>   ├── <%= link_to child.slug, edit_branch_path(child) %></pre>
             </div>
@@ -73,6 +73,20 @@
         <% end %>
       <% end %>
     </div>
+    <br>
+    <hr>
+    <h1>Etichette label:</h1>
+    <% @branch.children.where(label: true).each do |child| %>
+      <div class="child-node">
+        <pre>   ├── <%= link_to child.slug, edit_branch_path(child) %></pre>
+      </div>
+    <% end %>
+    <% if params[:new_children_label].present? %>
+      <%= render "branches/form_children_new", branch: Branch.new(parent_id: @branch.id, label: false), parent: @branch %>
+      <%= link_to 'Annulla', edit_branch_path(@branch), class:"btn" %>
+    <% else %>
+      <%= link_to '+ Etichetta', edit_branch_path(@branch, new_children_label: true, label: true), class:"btn" %>
+    <% end %>
   </div>
 <% else %>
   <%= link_to 'Annulla', edit_branch_path(@branch), class:"btn" %>

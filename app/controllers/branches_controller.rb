@@ -190,7 +190,8 @@ class BranchesController < ApplicationController
     #   updates[:child_id]  = nil unless Branch.exists?(branch.child_id)
     #   branch.update(updates) if updates.any?
     # end
-    @branch_link_parent = @branch.user.branches.where(child_id: @branch.id)
+    @branch_link_parent = @branch.user.branches.where(child_id: @branch.id).where(label: false)
+
     @branch.build_external_post if @branch.external_post.nil?
   end
 
