@@ -24,6 +24,7 @@ module BranchesHelper
       visibility: branch.visibility,
       pubblicato: branch.published,
       label: branch.label,
+      structure: branch.structure,
       parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       link_child_name: branch.child_link&.slug,
       link_child_id: branch.child_link&.id,

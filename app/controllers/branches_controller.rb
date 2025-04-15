@@ -85,6 +85,7 @@ class BranchesController < ApplicationController
       slug: data["name"],
       visibility: data["visibilità"],
       published: data["pubblicato"],
+      structure: data["structure"],
       label: data["label"],
       parent: parent
     )
