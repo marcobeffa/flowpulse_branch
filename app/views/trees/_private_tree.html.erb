@@ -8,6 +8,22 @@
           <%= link_to "Modifica", edit_external_post_path(@branch.external_post), class:"btn m-2" %>
           <%= link_to "Elimina", external_post_path(@branch.external_post), method: :delete, data: { confirm: "Sei sicuro?" }, class:"btn m-2" %>
         </div>
+        <% if @branch.external_post.api_variabile.present? %>
+          <div class="    mbe-4 card flex flex-col gap">
+            <div class="flex items-start gap-half ">
+              <a href="https://note.flowpulse.net/api/v1/<%= @branch.external_post.api_variabile %>" class="btn btn--primary" target="_blank">
+                Api pubblica
+              </a>
+              <div class="input input--actor flex items-center gap" data-controller="copyable-input">
+                <%= text_field_tag "copyable_input", "https://note.flowpulse.net/api/v1/#{@branch.external_post.api_variabile}", readonly: "readonly", data: { copyable_input_target: "input" } %>
+                <button type="button" class="btn btn--plain" data-copyable-input-target="button" data-action="copyable-input#copy">
+                  <%= image_tag "copy.svg", size: 20, aria: { hidden: true } %>
+                  <span class="sr-only">Copy to clipboard</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        <% end %>
         <% if @branch.external_post.updated_at.present? %>
           Ultimo aggiornamento: <%= @branch.external_post.updated_at %>
         <% end %>
