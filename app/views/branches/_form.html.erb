@@ -30,8 +30,15 @@
     </div>
   <% end %>
   <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :structure, "Structure?" %>
-    <%= form.check_box :structure %>
+    <%= form.label :content, "Tipo di nodo" %>
+    <div class="flex items-center gap">
+      <%= form.radio_button :content, true, id: "content_true" %>
+      <%= form.label :content_true, "Contenuto" %>
+    </div>
+    <div class="flex items-center gap">
+      <%= form.radio_button :content, false, id: "content_false" %>
+      <%= form.label :content_false, "Struttura" %>
+    </div>
   </div>
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :slug, class: "text-sm font-medium leading-none" %>
@@ -50,19 +57,27 @@
     <%= form.number_field :child_id, class: "input" %>
   </div>
   <!-- Published -->
+  <!-- Published -->
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :published, "Pubblicato?" %>
-    <%= form.check_box :published %>
+    <div class="flex items-center gap">
+      <%= form.radio_button :published, true, id: "published_true" %>
+      <%= form.label :published_true, "Sì" %>
+    </div>
+    <div class="flex items-center gap">
+      <%= form.radio_button :published, false, id: "published_false" %>
+      <%= form.label :published_false, "No" %>
+    </div>
   </div>
   <!-- Visibility enum -->
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :visibility, "Visibilità" %>
-    <%= form.select :visibility, Branch.visibilities.keys.map { |v| [v.titleize, v] }, class:"input"  %>
+    <%= form.select :visibility, Branch.visibilities.keys.map { |v| [v.titleize, v] },{},  class:"input"  %>
   </div>
   <!-- Stato enum -->
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :stato, "Stato" %>
-    <%= form.select :stato, Branch.statos.keys.map { |s| [s.titleize, s] }, class:"input"  %>
+    <%= form.select :stato, Branch.statos.keys.map { |s| [s.titleize, s] }, {}, class:"input"  %>
   </div>
   <div class="inline-flex items-center mbs-2 mie-1">
     <%= form.submit class: "btn btn--primary" %>

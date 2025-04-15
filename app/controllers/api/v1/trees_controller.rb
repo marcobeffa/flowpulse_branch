@@ -18,7 +18,7 @@ class Api::V1::TreesController < ApplicationController
       name: branch.slug.strip, # Rimuove spazi prima/dopo
       external_post_id: branch.external_post&.id,
       label: branch.label,
-      structure: branch.structure,
+      content: branch.content,
       parent_links:  branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) }, 
       link_child_name: branch.child_link&.slug,
       link_child_id: branch.child_link&.id,
