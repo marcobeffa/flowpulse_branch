@@ -19,6 +19,7 @@
     <%= form.text_field :branch_id, class: "input" %>
   </div>
   <div class="flex flex-col items-start gap-half mbe-4">
+    <p class= "text-sm font-medium leading-none">https://note.flowpulse.net/api/v1/#{@branch.api_variabile} </p>
     <%= form.label :api_variabile, class: "text-sm font-medium leading-none" %>
     <%= form.text_field :api_variabile, class: "input" %>
   </div>

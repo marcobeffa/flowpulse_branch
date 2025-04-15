@@ -48,7 +48,14 @@
         <% elsif action_name == "ordinable" %>
           <%= render "branches/sortable_simple", branches: @branch.children, branch: @branch %>
         <% elsif action_name == "ul" %>
-          <%= render "ul_list", branches: @branch.children, parent_id: nil %>
+          <!---ul start-->
+          <ul>
+            <li  class="">
+              <%= link_to @branch.slug, profile_tree_path(@branch.user.username, @branch) %> | <b><%= link_to "Book", branch_path(@branch) %></b>
+            </li>
+            <%= render "ul_list", branches: @branch.children, parent_id: nil %>
+            <!---ul end-->
+          </ul>
         <% end %>
       </div>
     </div>

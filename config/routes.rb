@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   resources :branches do
+    resources :external_posts, except: [ :index, :show ]
     member do
       get :updateposition
       get :ordinabile

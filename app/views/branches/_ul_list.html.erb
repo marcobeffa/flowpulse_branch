@@ -1,7 +1,7 @@
 <ul>
   <% branches.where(label: false).each do |branch| %>
     <li>
-      <%= link_to branch.slug, ul_branch_path(branch) %>
+      <%= link_to branch.slug, ul_branch_path(branch) %> | <b><%= link_to "Book", branch_path(branch) %></b>
       <% if branch.children.any? { |b| b.parent_id == branch.id } %>
         <%= render "branches/ul_list", branches: branch.children, parent_id: branch.id %>
       <% end %>
