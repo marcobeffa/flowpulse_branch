@@ -7,13 +7,23 @@
 </div>
 <!--- stato -->
 <div class="flex gap-2 m-2 items-center">
+  <!-- CONTENT (Content vs Structure) -->
+  <%= turbo_frame_tag "branch_content_#{@branch.id}" do %>
+    <%= form_with url: branch_path(@branch), method: :patch,
+    scope: :branch,
+    data: { turbo_frame: "branch_content_#{@branch.id}" } do |f| %>
+      <%= hidden_field_tag "branch[content]", !@branch.content? %>
+      <%= f.submit (@branch.content? ? "📝 Contenuto (clic per rendere struttura)" : "📁 Struttura (clic per rendere contenuto)"),
+      class: "m-2 #{ @branch.content? ? 'btn-primary' : 'btn-outline' }" %>
+    <% end %>
+  <% end %>
   <!-- PUBLISHED -->
   <%= turbo_frame_tag "branch_published_#{@branch.id}" do %>
     <%= form_with url: branch_path(@branch), method: :patch,
       scope: :branch,
       data: { turbo_frame: "branch_published_#{@branch.id}" } do |f| %>
       <%= hidden_field_tag "branch[published]", !@branch.published? %>
-      <%= f.submit (@branch.published? ? "✅ Pubblicato (clic per nascondere)" : "❌ Nascosto (clic per pubblicare)"),
+      <%= f.submit (@branch.published? ? "✅ Pubblicato (clic per nascondere)" : "🚫 Nascosto (clic per pubblicare)"),
         class: "m-2 #{ @branch.published? ? 'btn-success' : 'btn-secondary' }" %>
     <% end %>
   <% end %>
