@@ -11,40 +11,79 @@
   </div>
 </div>
 <%= render 'branches/show' %>
-<div class="prose container">
-  <div class="flex">
-    <h4>Label</h4>
-    <%= link_to "+ Label", new_branch_path(parent_id: @branch.id, label: true), class: "btn m-2" %>
+<div class="container" id="tabs-nav-json">
+  <nav class="tabs__list" aria-label="Vista contenuto">
+    <%= link_to "All", mappa_branch_path(@branch, anchor: "tabs-nav-json", json: nil),
+      class: "btn tabs__button #{'active' if params[:json] == nil}",
+      aria: { current: ("page" if params[:json] == nil) } %>
+    <%= link_to "Label", mappa_branch_path(@branch, anchor: "tabs-nav-json", json: 'label'),
+      class: "btn tabs__button #{'active' if params[:json] == 'label'}",
+      aria: { current: ("page" if params[:json] == 'label') } %>
+    <%= link_to "Menu", mappa_branch_path(@branch, anchor: "tabs-nav-json", json: 'menu'),
+      class: "btn tabs__button #{'active' if params[:json] == 'menu'}",
+      aria: { current: ("page" if params[:json] == 'menu') } %>
+    <%= link_to "External Post", mappa_branch_path(@branch, anchor: "tabs-nav-json", json: 'post'),
+      class: "btn tabs__button #{'active' if params[:json] == 'post'}",
+      aria: { current: ("page" if params[:json] == 'post') } %>
+  </nav>
+</div>
+<% if params[:json] == "label" %>
+  <div class="prose container">
+    <div class="flex">
+      <h4>Label</h4>
+      <%= link_to "+ Label", new_branch_path(parent_id: @branch.id, label: true), class: "btn m-2" %>
+    </div>
+    <table class="w-full border-collapse border border-gray-300">
+      <tbody>
+        <% @branch.children.where(label: true).each do |branch| %>
+          <div class="flex">
+            <tr class="hover:bg-gray-50">
+              <td class="border border-gray-300 p-2">
+                <%= link_to pubblica_branch_path(branch) do %>
+                  <%= branch.published %> - <%= branch.visibility %>
+                <% end %>
+              </td>
+              <td class="border border-gray-300 p-2">id: <%= branch.id %></td>
+              <td class="border border-gray-300 p-2">
+                <strong><%= branch.slug %></strong>
+              </td>
+              <td class="border border-gray-300 p-2">
+                <% if action_name == "edit" %>
+                  <%= link_to "+ genitore", edit_branch_path(params[:edit_child_id_for_link], parent_id_for_link: branch.id ), class:"btn" %>
+                <% else %>
+                  <div class="flex">
+                    <%= link_to "mostra", mappa_branch_path(branch), class: "btn mi-2" %>
+                    <%= link_to "Modifica", edit_branch_path(branch), class: "btn mi-2" %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          </div>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-  <table class="w-full border-collapse border border-gray-300">
-    <tbody>
-      <% @branch.children.where(label: true).each do |branch| %>
-        <div class="flex">
-          <tr class="hover:bg-gray-50">
-            <td class="border border-gray-300 p-2">
-              <%= link_to pubblica_branch_path(branch) do %>
-                <%= branch.published %> - <%= branch.visibility %>
-              <% end %>
-            </td>
-            <td class="border border-gray-300 p-2">id: <%= branch.id %></td>
-            <td class="border border-gray-300 p-2">
-              <strong><%= branch.slug %></strong>
-            </td>
-            <td class="border border-gray-300 p-2">
-              <% if action_name == "edit" %>
-                <%= link_to "+ genitore", edit_branch_path(params[:edit_child_id_for_link], parent_id_for_link: branch.id ), class:"btn" %>
-              <% else %>
-                <div class="flex">
-                  <%= link_to "mostra", mappa_branch_path(branch), class: "btn mi-2" %>
-                  <%= link_to "Modifica", edit_branch_path(branch), class: "btn mi-2" %>
-                </div>
-              <% end %>
-            </td>
-          </tr>
-        </div>
-      <% end %>
-    </tbody>
-  </table>
-  <%= link_to "⬇️ Scarica JSON", download_tree_branch_path(@branch), data: { turbo: false }, class: "btn" %>
-  <pre><%= JSON.pretty_generate(full_tree_to_hash(@branch)) %></pre>
+<% end %>
+<% if params[:json] == "menu" %>
+  <div class="prose container">
+    <h4 class="block">Menu</h4>
+  </div>
+  <div class="block container prose">
+    <pre>
+    <%=  JSON.pretty_generate(tree_to_menu_hash(@branch)) %>
+  </div>
+<% end %>
+<% if params[:json] == "post" %>
+  <div class="prose container">
+    <div class="flex">
+      <h4>Post</h4>
+    </div>
+  </div>
+<% end %>
+<% if params[:json] == nil %>
+  <div class="prose container">
+    <%= link_to "⬇️ Scarica JSON", download_tree_branch_path(@branch), data: { turbo: false }, class: "btn" %>
+    <pre><%= JSON.pretty_generate(full_tree_to_hash(@branch)) %></pre>
+  </div>
+<% end %>
 </div>

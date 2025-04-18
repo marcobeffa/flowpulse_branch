@@ -84,7 +84,7 @@ class BranchesController < ApplicationController
       user: user,
       slug: data["name"],
       visibility: data["visibilità"],
-      published: data["pubblicato"],
+      published: data["published"],
       content: data["content"],
       label: data["label"],
       parent: parent
@@ -247,7 +247,7 @@ class BranchesController < ApplicationController
       user: user,
       slug: data["name"],
       visibility: data["visibilità"],
-      published: data["pubblicato"],
+      published: data["published"],
       label: data["label"],
       parent: parent
     )

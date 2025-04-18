@@ -11,7 +11,42 @@ module BranchesHelper
     parent_ids.reverse
   end
 
+  def tree_to_menu_hash(branch)
+    return {} if branch.nil? || !branch.published
+  
+    {
+      id: branch.id,
+      name: branch.slug.strip,
+      external_post_id: branch.external_post&.id,
+      visibility: branch.visibility,
+      published: branch.published,
+      label: branch.label,
+      content: branch.content,
+      parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
+      link_child_name: branch.child_link&.slug,
+      link_child_id: branch.child_link&.id,
+      children: branch.children.order(:position).map { |child| full_tree_to_hash(child) }.reject { |child| child.empty? }
+    }
+  end
 
+  def tree_to_menu_html(node)
+    return "" if node.nil?
+
+    # Crea l'elemento di lista per il nodo
+    html = "<li><a href='##{node[:name].downcase.parameterize}'>#{node[:name]}</a>"
+
+    # Se ci sono figli, crea un sottolista (ol)
+    if node[:children].any?
+      html += "<ol>"
+      node[:children].each do |child|
+        html += tree_to_menu_html(child)  # Chiamata ricorsiva per ogni figlio
+      end
+      html += "</ol>"
+    end
+
+    html += "</li>"
+    html
+  end
 
 
   def full_tree_to_hash(branch)
@@ -22,7 +57,7 @@ module BranchesHelper
       name: branch.slug.strip,
       external_post_id: branch.external_post&.id,
       visibility: branch.visibility,
-      pubblicato: branch.published,
+      published: branch.published,
       label: branch.label,
       content: branch.content,
       parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
