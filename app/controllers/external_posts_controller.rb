@@ -9,6 +9,10 @@ class ExternalPostsController < ApplicationController
     @external_post = ExternalPost.new(external_post_params)
 
     if @external_post.save
+      @external_post.branch.update(
+        updated_content: Time.current,
+        content: @external_post.content
+      )
       @external_post.fetch_and_save_content
       redirect_to @external_post.branch, notice: "Post esterno creato."
     else
@@ -20,6 +24,10 @@ class ExternalPostsController < ApplicationController
 
   def update
     if @external_post.update(external_post_params)
+      @external_post.branch.update(
+          updated_content: Time.current,
+          content: @external_post.content
+        )
       @external_post.fetch_and_save_content
       redirect_to @external_post.branch, notice: "Post esterno aggiornato."
     else

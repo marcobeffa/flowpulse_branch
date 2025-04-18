@@ -1,15 +1,5 @@
 <!--- stato -->
 <div class="flex gap-2 mi-1 ">
-  <!-- CONTENT (Content vs Structure) -->
-  <%= turbo_frame_tag "branch_content_#{@branch.id}" do %>
-    <%= form_with url: branch_path(@branch), method: :patch,
-    scope: :branch,
-    data: { turbo_frame: "branch_content_#{@branch.id}" } do |f| %>
-      <%= hidden_field_tag "branch[content]", !@branch.content? %>
-      <%= f.submit (@branch.content? ? "📝 Cont." : "📁 Strut."),
-      class: "m-2 #{ @branch.content? ? 'btn-primary' : 'btn-outline' }" %>
-    <% end %>
-  <% end %>
   <!-- PUBLISHED -->
   <%= turbo_frame_tag "branch_published_#{branch.id}" do %>
     <%= form_with url: branch_path(branch), method: :patch,

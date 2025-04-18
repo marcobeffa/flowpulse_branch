@@ -16,7 +16,7 @@ class BranchesTest < ApplicationSystemTestCase
 
   #   fill_in "Child", with: @branch.child_id
   #   fill_in "Mycategory", with: @branch.mycategory_id
-  #   fill_in "Note", with: @branch.content_id
+  #   fill_in "Note", with: @branch.updated_content
   #   fill_in "Parent", with: @branch.parent_id
   #   fill_in "Slug", with: @branch.slug
   #   fill_in "Slug note", with: @branch.slug_note
@@ -34,7 +34,7 @@ class BranchesTest < ApplicationSystemTestCase
 
   #   fill_in "Child", with: @branch.child_id
   #   fill_in "Mycategory", with: @branch.mycategory_id
-  #   fill_in "Note", with: @branch.content_id
+  #   fill_in "Note", with: @branch.updated_content
   #   fill_in "Parent", with: @branch.parent_id
   #   fill_in "Slug", with: @branch.slug
   #   fill_in "Slug note", with: @branch.slug_note

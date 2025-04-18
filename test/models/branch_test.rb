@@ -7,7 +7,7 @@
 #  slug               :string
 #  parent_id          :integer
 #  position           :integer
-#  content_id         :integer
+#  updated_content    :datetime
 #  slug_note          :string
 #  user_note_username :string
 #  child_id           :integer

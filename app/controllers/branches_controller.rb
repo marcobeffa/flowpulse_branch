@@ -7,10 +7,10 @@ class BranchesController < ApplicationController
   layout "trees", only: %i[show]
   # GET /branches or /branches.json
   def index
-    if params[:content].nil?
-     @branches = Current.user.branches.where(parent_id: nil, content: true).order(:position)
+    if params[:updated_content].nil?
+     @branches = Current.user.branches.where(parent_id: nil, updated_content: nil).order(:position)
     else
-      @branches = Current.user.branches.where(parent_id: nil, content: false).order(:position)
+      @branches = Current.user.branches.where(parent_id: nil).order(:position)
     end
   end
   def updateposition
@@ -85,8 +85,9 @@ class BranchesController < ApplicationController
       slug: data["name"],
       visibility: data["visibilità"],
       published: data["published"],
-      content: data["content"],
+      updated_content: data["updated_content"],
       label: data["label"],
+      updated_content: data["updated_content"],
       parent: parent
     )
 
@@ -249,6 +250,7 @@ class BranchesController < ApplicationController
       visibility: data["visibilità"],
       published: data["published"],
       label: data["label"],
+      updated_content: data["updated_content"],
       parent: parent
     )
 
@@ -287,6 +289,6 @@ class BranchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def branch_params
-      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :position, :published, :visibility, :stato, :content, :label, external_post_attributes: [ :slug, :profile ] ])
+      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :position, :published, :visibility, :stato, :updated_content, :label, :content, external_post_attributes: [ :slug, :profile ] ])
     end
 end

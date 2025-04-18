@@ -30,15 +30,8 @@
     </div>
   <% end %>
   <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :content, "Tipo di nodo" %>
-    <div class="flex items-center gap">
-      <%= form.radio_button :content, true, id: "content_true" %>
-      <%= form.label :content_true, "Contenuto" %>
-    </div>
-    <div class="flex items-center gap">
-      <%= form.radio_button :content, false, id: "content_false" %>
-      <%= form.label :content_false, "Struttura" %>
-    </div>
+    <%= form.label :updated_content, class: "text-sm font-medium leading-none" %>
+    <%= form.datetime_field :updated_content, class: "input" %>
   </div>
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :slug, class: "text-sm font-medium leading-none" %>

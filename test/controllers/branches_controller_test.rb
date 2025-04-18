@@ -17,7 +17,7 @@ class BranchesControllerTest < ActionDispatch::IntegrationTest
 
   # test "should create branch" do
   #   assert_difference("Branch.count") do
-  #     post branches_url, params: { branch: { child_id: @branch.child_id, mycategory_id: @branch.mycategory_id, content_id: @branch.content_id, parent_id: @branch.parent_id, slug: @branch.slug, slug_note: @branch.slug_note, user_id: @branch.user_id, user_note_username: @branch.user_note_username } }
+  #     post branches_url, params: { branch: { child_id: @branch.child_id, mycategory_id: @branch.mycategory_id, updated_content: @branch.updated_content, parent_id: @branch.parent_id, slug: @branch.slug, slug_note: @branch.slug_note, user_id: @branch.user_id, user_note_username: @branch.user_note_username } }
   #   end
 
   #   assert_redirected_to branch_url(Branch.last)
@@ -34,7 +34,7 @@ class BranchesControllerTest < ActionDispatch::IntegrationTest
   # end
 
   # test "should update branch" do
-  #   patch branch_url(@branch), params: { branch: { child_id: @branch.child_id, mycategory_id: @branch.mycategory_id, content_id: @branch.content_id, parent_id: @branch.parent_id, slug: @branch.slug, slug_note: @branch.slug_note, user_id: @branch.user_id, user_note_username: @branch.user_note_username } }
+  #   patch branch_url(@branch), params: { branch: { child_id: @branch.child_id, mycategory_id: @branch.mycategory_id, updated_content: @branch.updated_content, parent_id: @branch.parent_id, slug: @branch.slug, slug_note: @branch.slug_note, user_id: @branch.user_id, user_note_username: @branch.user_note_username } }
   #   assert_redirected_to branch_url(@branch)
   # end
 

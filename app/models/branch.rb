@@ -7,7 +7,7 @@
 #  slug               :string
 #  parent_id          :integer
 #  position           :integer
-#  content_id         :integer
+#  updated_content    :datetime
 #  slug_note          :string
 #  user_note_username :string
 #  child_id           :integer
@@ -46,8 +46,9 @@ class Branch < ApplicationRecord
 
   #  validates :slug_note, uniqueness: true, allow_nil: true
   #
-  ## Enum per visibilità
-  enum :visibility, { privato: 0, iscritti: 1, pubblico: 2 }
+  ## Enum per visibilità (iscritti: 2 = menu visibile post nascosto ai non iscritti, menu_nascosto_non_iscritti)
+  enum :visibility, { privato: 0, menu_nascosto_non_iscritti: 1, iscritti: 2, pubblico: 3 }
+  
 
   # Enum per stato
   enum :stato, {
@@ -57,6 +58,7 @@ class Branch < ApplicationRecord
   }
   VISIBILITY_ICONS = {
     "privato" => "🔒",
+    "menu_nascosto_non_iscritti" => "🙈",
     "iscritti" => "👥",
     "pubblico" => "🌍"
   }
@@ -66,7 +68,7 @@ class Branch < ApplicationRecord
   end
 
   def published_icon
-    published ? "✅" : "❌"
+    published ? "✅" : "🚫"
   end
   def root
     self.class.where(id: self_and_ancestors_ids.first).first
