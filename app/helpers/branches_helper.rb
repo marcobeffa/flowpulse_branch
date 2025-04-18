@@ -13,7 +13,7 @@ module BranchesHelper
 
   def tree_to_menu_hash(branch)
     return {} if branch.nil? || !branch.published
-  
+
     {
       id: branch.id,
       name: branch.slug.strip,

@@ -19,7 +19,7 @@ class Api::V1::TreesController < ApplicationController
       external_post_id: branch.external_post&.id,
       label: branch.label,
       content: branch.content,
-      parent_links:  branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) }, 
+      parent_links:  branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       link_child_name: branch.child_link&.slug,
       link_child_id: branch.child_link&.id,
       children: branch.children.where(visibility: "pubblico", published: true).order(:position).map { |child| api_full_tree_to_hash(child) }
@@ -34,7 +34,7 @@ class Api::V1::TreesController < ApplicationController
     parent_external_post_id: (parent_link.external_post&.id),
     grand_parent_id: (parent_link.parent.id if parent_link.parent.present?),
     grand_parent_name: (parent_link.parent.slug if parent_link.parent.present?)
-   
+
   }
   end
 end
