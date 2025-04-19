@@ -47,9 +47,9 @@ class Branch < ApplicationRecord
   #  validates :slug_note, uniqueness: true, allow_nil: true
   #
   ## Enum per visibilità (iscritti: 2 = iscritti tutto nascosto ai non iscritti, pubblico_menu)
-  enum :visibility, { 
-    privato: 0, 
-    iscritto: 1, 
+  enum :visibility, {
+    privato: 0,
+    iscritto: 1,
     loggato: 2,
     pubblico: 3
    }
@@ -84,14 +84,12 @@ class Branch < ApplicationRecord
     VISIBILITY_ICONS[visibility]
   end
   def content_icon
-    
     case self.content.nil?
     when false
       "📄✔️"
     when true
       "✍🏻💤"
     end
-   
   end
   def published_icon
     published ? "✅" : "🚫"

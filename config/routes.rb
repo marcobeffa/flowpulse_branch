@@ -5,8 +5,7 @@ Rails.application.routes.draw do
       resources :branches do
         member do
           get :treepage
-
-        end    
+        end
       end
     end
   end
