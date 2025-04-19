@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_18_145538) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_19_090736) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -25,9 +25,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_18_145538) do
     t.integer "visibility", default: 0
     t.boolean "published", default: false
     t.integer "stato", default: 0
-    t.boolean "label", default: false, null: false
     t.datetime "updated_content"
     t.jsonb "content"
+    t.boolean "field", default: false, null: false
+    t.integer "field_type"
     t.index ["user_id"], name: "index_branches_on_user_id"
   end
 

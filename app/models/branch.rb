@@ -46,9 +46,26 @@ class Branch < ApplicationRecord
 
   #  validates :slug_note, uniqueness: true, allow_nil: true
   #
-  ## Enum per visibilità (iscritti: 2 = menu visibile post nascosto ai non iscritti, menu_nascosto_non_iscritti)
-  enum :visibility, { privato: 0, menu_nascosto_non_iscritti: 1, iscritti: 2, pubblico: 3 }
-  
+  ## Enum per visibilità (iscritti: 2 = iscritti tutto nascosto ai non iscritti, pubblico_menu)
+  enum :visibility, { 
+    privato: 0, 
+    iscritto: 1, 
+    loggato: 2,
+    pubblico: 3
+   }
+  enum :field_type, {
+  string: 0,
+  text: 1,
+  integer: 2,
+  float: 3,
+  decimal: 4,
+  boolean: 5,
+  date: 6,
+  time: 7,
+  datetime: 8,
+  json: 9,
+  jsonb: 10
+}
 
   # Enum per stato
   enum :stato, {
@@ -58,15 +75,24 @@ class Branch < ApplicationRecord
   }
   VISIBILITY_ICONS = {
     "privato" => "🔒",
-    "menu_nascosto_non_iscritti" => "🙈",
-    "iscritti" => "👥",
+    "iscritto" => "🎟️",
+    "loggato" => "👩🏻‍💻",
     "pubblico" => "🌍"
   }
 
   def visibility_icon
     VISIBILITY_ICONS[visibility]
   end
-
+  def content_icon
+    
+    case self.content.nil?
+    when false
+      "📄✔️"
+    when true
+      "✍🏻💤"
+    end
+   
+  end
   def published_icon
     published ? "✅" : "🚫"
   end

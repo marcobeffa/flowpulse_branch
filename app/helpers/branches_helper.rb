@@ -20,7 +20,7 @@ module BranchesHelper
       external_post_id: branch.external_post&.id,
       visibility: branch.visibility,
       published: branch.published,
-      label: branch.label,
+      field: branch.field,
       updated_content: branch.updated_content,
       parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       link_child_name: branch.child_link&.slug,
@@ -58,7 +58,7 @@ module BranchesHelper
       external_post_id: branch.external_post&.id,
       visibility: branch.visibility,
       published: branch.published,
-      label: branch.label,
+      field: branch.field,
       updated_content: branch.updated_content,
       parent_links: branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       link_child_name: branch.child_link&.slug,
@@ -72,11 +72,11 @@ module BranchesHelper
 
     {
       id: branch.id,
-      name: "#{branch.slug.strip} [#{branch.visibility_icon} #{branch.published_icon}]",
+      name: "#{branch.slug.strip} [#{branch.visibility_icon} #{branch.published_icon} #{branch.content_icon}]",
       parent_links:  branch.parent_links.order(:position).map { |parent_link| parent_links_tree_to_hash(parent_link) },
       link_child_name: branch.child_link&.slug,
       link_child_id: branch.child_link&.id,
-      children: branch.children.order(:position).where(label: false).map { |child| tree_to_hash(child) }
+      children: branch.children.order(:position).where(field: false).map { |child| tree_to_hash(child) }
     }
   end
 

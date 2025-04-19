@@ -13,30 +13,38 @@
     <%= form.label :user_id, class: "text-sm font-medium leading-none" %>
     <%= form.text_field :user_id, class: "input" %>
   </div>
-  <% if params[:label] == "true" %>
+  <% if params[:field] == "true" &&  params[:parent_id].present? %>
     <div class="flex flex-col items-start gap-half mbe-4">
-      <%= form.label :label, "branch_show " %>
-      <%= form.hidden_field :label, value: true %>
-    </div>
-  <% elsif params[:label] == true %>
-    <div class="flex flex-col items-start gap-half mbe-4">
-      <%= form.label :label, "branch_index " %>
-      <%= form.hidden_field :label %>
+      <b>
+        <%= form.label :field, "Field relativo a: #{Current.user.branches.find(params[:parent_id]).slug}" %></b>
+      <%= form.hidden_field :field, value: true %>
     </div>
   <% else %>
     <div class="flex flex-col items-start gap-half mbe-4">
-      <%= form.label :label %>
-      <%= form.check_box :label %>
+      <%= form.label :field %>
+      <%= form.check_box :field %>
     </div>
   <% end %>
   <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :updated_content, class: "text-sm font-medium leading-none" %>
-    <%= form.datetime_field :updated_content, class: "input" %>
-  </div>
-  <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :slug, class: "text-sm font-medium leading-none" %>
+    <% if params[:field] == "true" || @branch.field == true %>
+      <%= form.label :slug_label, class: "text-sm font-medium leading-none" %>
+    <% else %>
+      <%= form.label :slug_name, class: "text-sm font-medium leading-none" %>
+    <% end %>
     <%= form.text_field :slug, class: "input" %>
   </div>
+  <% if params[:field] == "true" || @branch.field == true %>
+    <!-- Visibility enum -->
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :field_type, "Field Type" %>
+      <%= form.select :field_type, Branch.field_types.keys.map { |v| [v.titleize, v] },{},  class:"input"  %>
+    </div>
+  <% else %>
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :updated_content, class: "text-sm font-medium leading-none" %>
+      <%= form.datetime_field :updated_content, class: "input" %>
+    </div>
+  <% end %>
   <div class="flex flex-col items-start gap-half mbe-4">
     <%= form.label :parent_id, class: "text-sm font-medium leading-none" %>
     <% if  params[:parent_id].present? %>
@@ -45,32 +53,36 @@
       <%= form.number_field :parent_id, class: "input" %>
     <% end %>
   </div>
-  <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :child_id, class: "text-sm font-medium leading-none" %>
-    <%= form.number_field :child_id, class: "input" %>
-  </div>
-  <!-- Published -->
-  <!-- Published -->
-  <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :published, "Pubblicato?" %>
-    <div class="flex items-center gap">
-      <%= form.radio_button :published, true, id: "published_true" %>
-      <%= form.label :published_true, "Sì" %>
+  <% if !(params[:field] == "true" || @branch.field == true) %>
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :child_id, class: "text-sm font-medium leading-none" %>
+      <%= form.number_field :child_id, class: "input" %>
     </div>
-    <div class="flex items-center gap">
-      <%= form.radio_button :published, false, id: "published_false" %>
-      <%= form.label :published_false, "No" %>
+  <% end %>
+  <div class="flex gap-half mbe-4">
+    <!-- Published -->
+    <!-- Published -->
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :published, "Pubblicato?" %>
+      <div class="flex items-center gap">
+        <%= form.radio_button :published, true, id: "published_true" %>
+        <%= form.label :published_true, "Sì" %>
+      </div>
+      <div class="flex items-center gap">
+        <%= form.radio_button :published, false, id: "published_false" %>
+        <%= form.label :published_false, "No" %>
+      </div>
     </div>
-  </div>
-  <!-- Visibility enum -->
-  <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :visibility, "Visibilità" %>
-    <%= form.select :visibility, Branch.visibilities.keys.map { |v| [v.titleize, v] },{},  class:"input"  %>
-  </div>
-  <!-- Stato enum -->
-  <div class="flex flex-col items-start gap-half mbe-4">
-    <%= form.label :stato, "Stato" %>
-    <%= form.select :stato, Branch.statos.keys.map { |s| [s.titleize, s] }, {}, class:"input"  %>
+    <!-- Visibility enum -->
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :visibility, "Visibilità" %>
+      <%= form.select :visibility, Branch.visibilities.keys.map { |v| [v.titleize, v] },{},  class:"input"  %>
+    </div>
+    <!-- Stato enum -->
+    <div class="flex flex-col items-start gap-half mbe-4">
+      <%= form.label :stato, "Stato" %>
+      <%= form.select :stato, Branch.statos.keys.map { |s| [s.titleize, s] }, {}, class:"input"  %>
+    </div>
   </div>
   <div class="inline-flex items-center mbs-2 mie-1">
     <%= form.submit class: "btn btn--primary" %>

@@ -1,6 +1,6 @@
 <ul>
   <% branches.order(:position).each do |branch| %>
-    <% if branch.label != true %>
+    <% if branch.field != true %>
       <% if (branch.visibility == "pubblico" && branch.published == true && controller_name == "trees") || controller_name == "branches"  %>
         <li  class="<%= "border" if controller_name == "branches" %>">
         <% end %>

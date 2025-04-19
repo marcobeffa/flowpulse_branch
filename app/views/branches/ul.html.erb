@@ -1,8 +1,8 @@
 <%= render 'branches/show' %>
 <div class="container prose">
-  <h2>Label:</h2>
+  <h2>Field:</h2>
   <ul >
-    <% @branch.children.where(label: true).each do |branch| %>
+    <% @branch.children.where(field: true).each do |branch| %>
       <li>
         <%= link_to branch.slug, ul_branch_path(branch) %>
       </li>

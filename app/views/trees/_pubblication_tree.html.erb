@@ -18,20 +18,32 @@
         <span>
           <%=
           case branch.visibility
+             
           when "privato"
             "🔒"
-          when "pubblico"
-            "🌐"
-          when "iscritti"
-            "👥"
+          when "iscritto"
+            "🎟️"
+          when "loggato"
+            "👩🏻‍💻"
+           when "pubblico"
+            "🌍"
           else
             "❓"
           end
-        %>
+        %> <%=
+          case @branch.content.nil?
+          when false
+            "📄✔️"
+          when true
+            "✍🏻💤"
+          end
+         
+        %>&nbsp;&nbsp;&nbsp;
         </span>
         <%= f.label :visibility, nil, class: "sr-only" %>
         <%= f.select :visibility,
-          Branch.visibilities.keys.map { |v| [t("activerecord.attributes.branch.visibility.#{v}"), v] },
+        Branch::VISIBILITY_ICONS.map { |key, icon| ["#{icon}", key] },
+          
           {}, { onchange: "this.form.requestSubmit()", class: "select" } %>
       </div>
     <% end %>

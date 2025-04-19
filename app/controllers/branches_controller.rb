@@ -86,7 +86,7 @@ class BranchesController < ApplicationController
       visibility: data["visibilità"],
       published: data["published"],
       updated_content: data["updated_content"],
-      label: data["label"],
+      field: data["field"],
       updated_content: data["updated_content"],
       parent: parent
     )
@@ -192,7 +192,7 @@ class BranchesController < ApplicationController
     #   updates[:child_id]  = nil unless Branch.exists?(branch.child_id)
     #   branch.update(updates) if updates.any?
     # end
-    @branch_link_parent = @branch.user.branches.where(child_id: @branch.id).where(label: false)
+    @branch_link_parent = @branch.user.branches.where(child_id: @branch.id).where(field: false)
 
     @branch.build_external_post if @branch.external_post.nil?
   end
@@ -249,7 +249,7 @@ class BranchesController < ApplicationController
       slug: data["name"],
       visibility: data["visibilità"],
       published: data["published"],
-      label: data["label"],
+      field: data["field"],
       updated_content: data["updated_content"],
       parent: parent
     )
@@ -289,6 +289,6 @@ class BranchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def branch_params
-      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :position, :published, :visibility, :stato, :updated_content, :label, :content, external_post_attributes: [ :slug, :profile ] ])
+      params.expect(branch: [ :user_id, :slug, :parent_id, :child_id, :position, :published, :visibility, :stato, :updated_content, :field, :field_type, :content, external_post_attributes: [ :slug, :profile ] ])
     end
 end

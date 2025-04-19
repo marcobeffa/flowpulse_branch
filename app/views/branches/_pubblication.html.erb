@@ -13,7 +13,7 @@
       scope: :branch,
       data: { turbo_frame: "branch_published_#{@branch.id}" } do |f| %>
       <%= hidden_field_tag "branch[published]", !@branch.published? %>
-      <%= f.submit (@branch.published? ? "✅ Pubblicato (clic per nascondere)" : "🚫 Nascosto (clic per pubblicare)"),
+      <%= f.submit (@branch.published? ? "✅ Pubblicato (clic per nascondere)" : "🚫 Non pubblicato (clic per pubblicare)"),
         class: "m-2 #{ @branch.published? ? 'btn-success' : 'btn-secondary' }" %>
     <% end %>
   <% end %>
@@ -25,15 +25,19 @@
         <span>
           <%=
           case @branch.visibility
+        
           when "privato"
             "🔒"
-          when "pubblico"
-            "🌐"
-          when "iscritti"
-            "👥"
+          when "iscritto"
+            "🎟️"
+          when "loggato"
+            "👩🏻‍💻"
+           when "pubblico"
+            "🌍"
           else
             "❓"
           end
+           
         %>
         </span>
         <%= f.label :visibility, nil, class: "sr-only" %>
@@ -60,6 +64,15 @@
           else
             "❓"
           end
+        %>
+          <%=
+          case @branch.content.nil?
+          when false
+            "📄✔️"
+          when true
+            "✍🏻💤]"
+          end
+         
         %>
         </span>
         <%= f.label :stato, nil, class: "sr-only" %>
