@@ -2,7 +2,7 @@
 <% if action_name == "show" %>
   <%= render 'trees/show' %>
 <% else %>
-  <%= render 'branches/pubblication' %>
+  <%= render 'branches/pubblication', branch: @branch %>
   <nav class="tabs__list" aria-label="Vista contenuto">
     <%= link_to "Private", branch_path(@branch),
       class: "btn tabs__button #{'active' if action_name == 'show'}",

@@ -1,30 +1,30 @@
 <div class="flex flex-wrap items-center gap mb-2" >
   <%= link_to "<- ", branches_path, class: "btn" %>
   <h1 class="text-xl font-bold">
-    <%= @branch.slug %><%= link_to "+ 🔽", new_branch_path(parent_id: @branch.id), class: "btn m-4" %></h1>
-  <%= link_to "Edit", edit_branch_path(@branch), class: "btn" %>
-  <%= button_to "Elimina", @branch, method: :delete, class: "btn", data: { turbo_confirm: "Are you sure?" } %>
+    <%= branch.slug %><%= link_to "+ 🔽", new_branch_path(parent_id: branch.id), class: "btn m-4" %></h1>
+  <%= link_to "Edit", edit_branch_path(branch), class: "btn" %>
+  <%= button_to "Elimina", branch, method: :delete, class: "btn", data: { turbo_confirm: "Are you sure?" } %>
 </div>
 <!--- stato -->
 <div class="flex gap-2 m-2 items-center">
   <!-- PUBLISHED -->
-  <%= turbo_frame_tag "branch_published_#{@branch.id}" do %>
-    <%= form_with url: branch_path(@branch), method: :patch,
+  <%= turbo_frame_tag "branch_published_#{branch.id}" do %>
+    <%= form_with url: branch_path(branch), method: :patch,
       scope: :branch,
-      data: { turbo_frame: "branch_published_#{@branch.id}" } do |f| %>
-      <%= hidden_field_tag "branch[published]", !@branch.published? %>
-      <%= f.submit (@branch.published? ? "✅ Pubblicato (clic per nascondere)" : "🚫 Non pubblicato (clic per pubblicare)"),
-        class: "m-2 #{ @branch.published? ? 'btn-success' : 'btn-secondary' }" %>
+      data: { turbo_frame: "branch_published_#{branch.id}" } do |f| %>
+      <%= hidden_field_tag "branch[published]", !branch.published? %>
+      <%= f.submit (branch.published? ? "✅ Pubblicato (clic per nascondere)" : "🚫 Non pubblicato (clic per pubblicare)"),
+        class: "m-2 #{ branch.published? ? 'btn-success' : 'btn-secondary' }" %>
     <% end %>
   <% end %>
   <!-- VISIBILITY -->
-  <%= turbo_frame_tag "branch_visibility_#{@branch.id}" do %>
-    <%= form_with model: @branch, url: branch_path(@branch), method: :patch,
-    data: { turbo_frame: "branch_visibility_#{@branch.id}" } do |f| %>
+  <%= turbo_frame_tag "branch_visibility_#{branch.id}" do %>
+    <%= form_with model: branch, url: branch_path(branch), method: :patch,
+    data: { turbo_frame: "branch_visibility_#{branch.id}" } do |f| %>
       <div class="flex items-center gap-2 m-2">
         <span>
           <%=
-          case @branch.visibility
+          case branch.visibility
         
           when "privato"
             "🔒"
@@ -48,13 +48,13 @@
     <% end %>
   <% end %>
   <!-- STATO -->
-  <%= turbo_frame_tag "branch_stato_#{@branch.id}" do %>
-    <%= form_with model: @branch, url: branch_path(@branch), method: :patch,
-    data: { turbo_frame: "branch_stato_#{@branch.id}" } do |f| %>
+  <%= turbo_frame_tag "branch_stato_#{branch.id}" do %>
+    <%= form_with model: branch, url: branch_path(branch), method: :patch,
+    data: { turbo_frame: "branch_stato_#{branch.id}" } do |f| %>
       <div class="flex items-center gap-2 m-2">
         <span>
           <%=
-          case @branch.stato
+          case branch.stato
           when "bozza"
             "📝"
           when "organizzata"

@@ -1,5 +1,5 @@
 <%# Buttons Simple %>
-<%= render 'branches/pubblication' %>
+<%= render 'branches/pubblication', branch: @branch %>
 <nav class="tabs__list" aria-label="Home and Settings">
   <%= link_to "Private", branch_path(@branch), class: "btn tabs__button" %>
   <%= link_to "Mappa", mappa_branch_path(@branch), class: "btn tabs__button" %>
