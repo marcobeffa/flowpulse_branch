@@ -25,50 +25,58 @@ class Api::V1::BranchesController < ApplicationController
   private
   def api_tree_to_hash_treepage(branch)
     return {} unless branch
-
-    main_id = branch.child_link&.id || branch.id
-    main_name = branch.child_link&.slug&.strip || branch.slug.strip
+  
     tipo_branch = branch.child_link&.id && branch.child_link&.slug ? "link" : "treepage"
-
+  
     base = {
       visibility: branch.visibility,
-      branch_id: main_id,
-      name: main_name,
+      branch_id: branch.id,
+      name: branch.slug.strip,
       tipo: tipo_branch
     }
-
+  
+    if tipo_branch == "link"
+      link_branch = Branch.find_by(id: branch.child_id)
+      base.merge!(
+        link_branch_id: branch.child_id,
+        link_branch_name: link_branch&.slug&.strip
+      )
+    end
     if tipo_branch == "treepage"
-      # costruisci extra con ordine: parent_links -> content (opzionale) -> children
       extra = {}
-
-      extra[:parent_links] = branch.parent_links.order(:position).map { |pl| parent_links_tree_to_hash(pl) }
+  
+      extra[:parent_links] = branch.parent_links.order(:position).map do |pl|
+        parent_links_tree_to_hash(pl)
+      end
+  
       extra[:fields] = branch.children
-      .where(field: true, published: true)
-      .where.not(visibility: "privato")
-      .order(:position)
-      .map do |field_branch|
-        {
-          visibility: field_branch.visibility,
-          label: field_branch.slug,
-          type: field_branch.field_type
-
-        }
-      end
+        .where(field: true, published: true)
+        .where.not(visibility: "privato")
+        .order(:position)
+        .map do |field_branch|
+          {
+            visibility: field_branch.visibility,
+            label: field_branch.slug,
+            type: field_branch.field_type
+          }
+        end
+  
       if branch.updated_content.present?
-        extra[:content] = branch.content
+        extra[:content] = branch.updated_content
       end
-
+  
       extra[:children] = branch.children
         .where(field: false, published: true)
         .where.not(visibility: "privato")
         .order(:position)
         .map { |child| api_tree_to_hash_treepage(child) }
-
+  
       base.merge!(extra)
     end
-
+  
     base
   end
+  
   def parent_links_tree_to_hash(parent_link)
     return {} unless parent_link
 
@@ -79,4 +87,4 @@ class Api::V1::BranchesController < ApplicationController
       grand_parent_branch_name: parent_link.parent&.slug
     }
   end
-end
+end 
