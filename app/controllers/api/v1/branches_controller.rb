@@ -25,16 +25,16 @@ class Api::V1::BranchesController < ApplicationController
   private
   def api_tree_to_hash_treepage(branch)
     return {} unless branch
-  
+
     tipo_branch = branch.child_link&.id && branch.child_link&.slug ? "link" : "treepage"
-  
+
     base = {
       visibility: branch.visibility,
       branch_id: branch.id,
       name: branch.slug.strip,
       tipo: tipo_branch
     }
-  
+
     if tipo_branch == "link"
       link_branch = Branch.find_by(id: branch.child_id)
       base.merge!(
@@ -44,11 +44,11 @@ class Api::V1::BranchesController < ApplicationController
     end
     if tipo_branch == "treepage"
       extra = {}
-  
+
       extra[:parent_links] = branch.parent_links.order(:position).map do |pl|
         parent_links_tree_to_hash(pl)
       end
-  
+
       extra[:fields] = branch.children
         .where(field: true, published: true)
         .where.not(visibility: "privato")
@@ -60,23 +60,23 @@ class Api::V1::BranchesController < ApplicationController
             type: field_branch.field_type
           }
         end
-  
+
       if branch.updated_content.present?
         extra[:content] = branch.updated_content
       end
-  
+
       extra[:children] = branch.children
         .where(field: false, published: true)
         .where.not(visibility: "privato")
         .order(:position)
         .map { |child| api_tree_to_hash_treepage(child) }
-  
+
       base.merge!(extra)
     end
-  
+
     base
   end
-  
+
   def parent_links_tree_to_hash(parent_link)
     return {} unless parent_link
 
@@ -87,4 +87,4 @@ class Api::V1::BranchesController < ApplicationController
       grand_parent_branch_name: parent_link.parent&.slug
     }
   end
-end 
+end
