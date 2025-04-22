@@ -32,7 +32,9 @@ class Api::V1::BranchesController < ApplicationController
       visibility: branch.visibility,
       branch_id: branch.id,
       name: branch.slug.strip,
-      tipo: tipo_branch
+      tipo: tipo_branch,
+      updated_content: branch.updated_content,
+      content: branch.content
     }
 
     if tipo_branch == "link"
@@ -42,6 +44,7 @@ class Api::V1::BranchesController < ApplicationController
         link_branch_name: link_branch&.slug&.strip
       )
     end
+
     if tipo_branch == "treepage"
       extra = {}
 
@@ -61,9 +64,7 @@ class Api::V1::BranchesController < ApplicationController
           }
         end
 
-      if branch.updated_content.present?
-        extra[:content] = branch.updated_content
-      end
+
 
       extra[:children] = branch.children
         .where(field: false, published: true)
