@@ -1,5 +1,5 @@
 class Api::V1::BranchesController < ApplicationController
-  allow_unauthenticated_access only: %i[hash_treepage hash_menu hash_fields hash_content]
+  allow_unauthenticated_access only: %i[treepage menu fields content]
 
   def treepage
     branch = Branch.find_by(id: params[:id])
