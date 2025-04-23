@@ -10,6 +10,18 @@
     </button>
   </div>
 </div>
+<div class="flex">
+  <a href="<%= url_for(controller: 'api/v1/branches', action: 'treepage', id: @branch.id, only_path: false) %>" class="mi-2 btn">
+    Vai all'api per vedere treepage
+  </a>
+  <div class="input input--actor flex items-center gap" data-controller="copyable-input">
+    <%= text_field_tag "copyable_input", url_for(controller: 'api/v1/branches', action: 'treepage', id: @branch.id, only_path: false), readonly: "readonly", data: { copyable_input_target: "input" } %>
+    <button type="button" class="btn btn--plain" data-copyable-input-target="button" data-action="copyable-input#copy">
+      <%= image_tag "copy.svg", size: 20, aria: { hidden: true } %>
+      <span class="sr-only">Copy to clipboard</span>
+    </button>
+  </div>
+</div>
 <%= render 'branches/show' %>
 <div class="container" id="tabs-nav-json">
   <nav class="tabs__list" aria-label="Vista contenuto">
