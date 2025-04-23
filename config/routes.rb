@@ -4,10 +4,10 @@ Rails.application.routes.draw do
       resources :trees, only: [ :show ]
       resources :branches do
         member do
-          get :hash_treepage
-          get :hash_menu
-          get :hash_fields
-          get :hash_content
+          get :treepage
+          get :menu
+          get :fields
+          get :content
         end
       end
     end

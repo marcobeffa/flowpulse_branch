@@ -1,7 +1,7 @@
 class Api::V1::BranchesController < ApplicationController
   allow_unauthenticated_access only: %i[hash_treepage hash_menu hash_fields hash_content]
 
-  def hash_treepage
+  def treepage
     branch = Branch.find_by(id: params[:id])
     if branch
       tree_hash = api_tree_to_hash_treepage(branch)
@@ -19,7 +19,7 @@ class Api::V1::BranchesController < ApplicationController
     end
   end
 
-  def hash_menu
+  def menu
     branch = Branch.find_by(id: params[:id])
     if branch
       tree_hash = api_tree_to_hash_menu(branch)
@@ -37,7 +37,7 @@ class Api::V1::BranchesController < ApplicationController
     end
   end
 
-  def hash_fields
+  def fields
     branch = Branch.find_by(id: params[:id])
     if branch
       tree_hash = api_tree_to_hash_fields(branch)
@@ -56,7 +56,7 @@ class Api::V1::BranchesController < ApplicationController
   end
 
 
-  def hash_content
+  def content
     branch = Branch.find_by(id: params[:id])
     if branch
       tree_hash = api_tree_to_hash_content(branch)
