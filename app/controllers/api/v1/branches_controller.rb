@@ -206,9 +206,7 @@ class Api::V1::BranchesController < ApplicationController
     if tipo_branch == "treepage"
       extra = {}
 
-      extra[:parent_links] = branch.parent_links.order(:position).map do |pl|
-        parent_links_tree_to_hash(pl)
-      end
+
 
       extra[:fields] = branch.children
         .where(field: true, published: true)
