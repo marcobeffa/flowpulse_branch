@@ -28,6 +28,19 @@
           Ultimo aggiornamento: <%= @branch.external_post.updated_at %>
         <% end %>
         <%#= rendered_body(@post.body) if @post.body  %>
+        <!-- video-->
+        <% if embed_url(content).present? %>
+          <div class="video-container">
+            <iframe src="<%= embed_url(content) %>"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+            </iframe>
+          </div>
+        <% elsif content.image.present? %>
+          <img src="<%= content.image %>" alt="<%= content.title %>" class="w-full h-auto rounded-lg mt-4 mb-4" />
+        <% end %>
+        <!-- contenuto-->
         <div>
           <div class="flex flex-col gap-2 prose text-gray-800">
             <%= markdown(@branch.external_post.content["body"]) %>
