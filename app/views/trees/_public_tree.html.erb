@@ -9,8 +9,8 @@
     allowfullscreen>
       </iframe>
     </div>
-  <% elsif content.image.present? %>
-    <img src="<%= content.image %>" alt="<%= content.title %>" class="w-full h-auto rounded-lg mt-4 mb-4" />
+  <% elsif @branch.external_post.content["image"].present? %>
+    <img src="<%=  @branch.external_post.content["image"] %>" alt="<%= c @branch.external_post.content["title"] %>" class="w-full h-auto rounded-lg mt-4 mb-4" />
   <% end %>
   <!-- contenuto-->
   <div class="flex flex-col gap-2 prose text-gray-800">
