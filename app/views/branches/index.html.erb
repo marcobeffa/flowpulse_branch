@@ -1,7 +1,15 @@
 <% content_for :title, "Branches" %>
 <div class="flex items-center justify-between mbe-4">
   <h1 class="font-bold text-4xl">Branches</h1>
+  <%= link_to "📤 Importa albero JSON", import_tree_form_branches_path, class: "btn btn-outline-primary" %>
   <%= link_to "New branch", new_branch_path, class: "btn btn--primary" %>
 </div>
-<%= link_to "📤 Importa albero JSON", import_tree_form_branches_path, class: "btn btn-outline-primary" %>
+<div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+  <%= link_to "📂 Tutti", branches_path(updated_content: "all"),
+    class: params[:updated_content] == "all" ? "btn btn--primary" : "btn btn-outline-primary" %>
+  <%= link_to "📝 Con post", branches_path(updated_content: "true"),
+    class: params[:updated_content] == "true" ? "btn btn--primary" : "btn btn-outline-primary" %>
+  <%= link_to "📭 Senza post", branches_path,
+    class: params[:updated_content].nil? ? "btn btn--primary" : "btn btn-outline-primary" %>
+</div>
 <%= render 'branches/index' %>

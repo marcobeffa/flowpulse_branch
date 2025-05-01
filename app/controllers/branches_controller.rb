@@ -7,11 +7,19 @@ class BranchesController < ApplicationController
   layout "trees", only: %i[show]
   # GET /branches or /branches.json
   def index
-    if params[:updated_content].nil?
-     @branches = Current.user.branches.where(parent_id: nil, updated_content: nil).order(:position)
+    scope = Current.user.branches.where(parent_id: nil)
+
+    case params[:updated_content]
+    when "true"
+      scope = scope.where.not(updated_content: nil)
+    when "all"
+      # niente filtro → mostra tutto
     else
-      @branches = Current.user.branches.where(parent_id: nil).order(:position)
+      # default → solo senza post
+      scope = scope.where(updated_content: nil)
     end
+
+    @branches = scope.order(updated_at: :desc)
   end
   def updateposition
     @branch_root = @branch.root
