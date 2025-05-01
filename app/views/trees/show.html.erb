@@ -1,1 +1,15 @@
+<!---->
+<% if @branch.external_post.present? %>
+  <% if @branch.external_post.content.present? %>
+    <% content = @branch.external_post.content %>
+    <% content_for :og_title, content["title"] %>
+    <% content_for :og_description, content["description"] %>
+    <% content_for :og_image, content["image"] %>
+    <% content_for :title, content["title"] %>
+    <% content_for :meta_description, content["description"] %>
+    <%= content["title"] %>
+    <%= content["image"] %>
+    <%= content["description"] %>
+  <% end %>
+<% end %>
 <%= render 'show' %>
