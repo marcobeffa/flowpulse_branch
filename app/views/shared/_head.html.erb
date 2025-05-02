@@ -1,0 +1,39 @@
+<head>
+  <!-- Meta base -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= content_for?(:title) ? yield(:title) : "Flowpulse Branch" %></title>
+  <meta name="description" content="<%= content_for?(:meta_description) ? yield(:meta_description) : 'Descrizione default del sito' %>">
+  <!-- Mobile Web App -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- Icone -->
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
+  <!-- PWA Manifest (abilitare anche in routes.rb se usi PWA) -->
+  <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+  <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+  <meta property="og:title" content="<%= content_for?(:og_title) ? yield(:og_title) : 'Titolo di default' %>">
+  <meta property="og:description" content="<%= content_for?(:og_description) ? yield(:og_description) : 'Descrizione generica' %>">
+  <meta property="og:image" content="<%= content_for?(:og_image) ? yield(:og_image) : image_url('default-og.jpg') %>">
+  <meta property="og:url" content="<%= request.original_url %>">
+  <meta property="og:type" content="article">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= content_for?(:og_title) ? yield(:og_title) : 'Titolo di default' %>">
+  <meta name="twitter:description" content="<%= content_for?(:og_description) ? yield(:og_description) : 'Descrizione generica' %>">
+  <meta name="twitter:image" content="<%= content_for?(:og_image) ? yield(:og_image) : image_url('default-og.jpg') %>">
+  <!-- Rails tags -->
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <!-- CSS -->
+  <%= stylesheet_link_tag "css-zero/reset", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "css-zero/variables", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "css-zero/utilities", "data-turbo-track": "reload" %>
+  <!-- JS -->
+  <%= javascript_importmap_tags %>
+  <!-- Extra head content from views -->
+  <%= yield :head %>
+</head>
